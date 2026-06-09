@@ -466,6 +466,13 @@ main{max-width:1280px;margin:0 auto;padding:1.25rem;display:grid;grid-template-c
         <div class="canvas-hint">드래그로 이동 · 트랙패드/휠로 줌 · 두 손가락 핀치</div>
       </div>
 
+      <!-- CANVAS BOARDS BAR -->
+      <div id="canvas-boards-bar" style="display:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:.75rem 1rem;margin-bottom:8px;display:none;align-items:center;gap:8px;flex-wrap:wrap">
+        <span style="font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.05em">캔버스</span>
+        <div id="canvas-tabs" style="display:flex;gap:6px;flex-wrap:wrap;flex:1"></div>
+        <button class="btn btn-sm" onclick="addCanvasBoard()">+ 새 캔버스</button>
+      </div>
+
       <!-- MINDMAP -->
       <div id="mind-view">
         <div class="mm-top">
@@ -646,7 +653,7 @@ let generatedImgs={grid:null,mind:null,creation:null};
 let gridCols=3,gridZoom=1;
 let canvasTransX=0,canvasTransY=0,canvasScale=1;
 let canvasIsPanning=false,canvasPanStart={x:0,y:0};
-let canvasPositions={};
+let canvasPositions={},canvasBoards={},currentCanvasBoard='board1',canvasBoardNames={'board1':'기본 캔버스'};
 let creationItemId=null,workspaceIds=[];
 let acFocusIdx=-1;
 
@@ -675,7 +682,9 @@ window.addEventListener('load',()=>{
   const saved=JSON.parse(localStorage.getItem(STORAGE_KEYS)||'{}');
   if(saved.sbUrl&&saved.sbKey){SB_URL=saved.sbUrl;SB_KEY=saved.sbKey;ANT_KEY=saved.antKey||'';GEM_KEY=saved.gemKey||'';showApp()}
   tagTree=JSON.parse(localStorage.getItem(STORAGE_TREE)||'null')||DEFAULT_TREE;
-  canvasPositions=JSON.parse(localStorage.getItem(STORAGE_CANVAS)||'{}');
+  canvasBoards=JSON.parse(localStorage.getItem(STORAGE_CANVAS)||'{"board1":{}}');
+  canvasBoardNames=JSON.parse(localStorage.getItem(STORAGE_CANVAS+'_names')||'{"board1":"기본 캔버스"}');
+  currentCanvasBoard=Object.keys(canvasBoards)[0]||'board1';
 });
 
 function startApp(){
@@ -752,7 +761,7 @@ function setView(v){
   document.getElementById('vt-mind').className='vt'+(v==='mind'?' active':'');
   document.getElementById('col-controls').style.display=v==='grid'?'flex':'none';
   if(v==='grid'){document.getElementById('grid-view').style.display='block'}
-  else if(v==='canvas'){document.getElementById('canvas-view').style.display='block';renderCanvas()}
+  else if(v==='canvas'){document.getElementById('canvas-view').style.display='block';renderCanvasBoards();renderCanvas()}
   else if(v==='mind'){document.getElementById('mind-view').style.display='block';document.getElementById('mind-view').className='show'}
   else if(v==='creation'){document.getElementById('creation-view').style.display='block'}
 }
@@ -811,12 +820,12 @@ function renderCanvas(){
   document.getElementById('canvas-empty').style.display=vis.length?'none':'flex';
   const cols=Math.ceil(Math.sqrt(vis.length));
   vis.forEach((it,i)=>{
-    const pos=canvasPositions[it.id]||{x:(i%cols)*200+20,y:Math.floor(i/cols)*220+20};
+    const pos=(canvasBoards[currentCanvasBoard]||{})[it.id]||{x:(i%cols)*220+20,y:Math.floor(i/cols)*300+20};
     const card=document.createElement('div');card.className='canvas-card';
     card.style.left=pos.x+'px';card.style.top=pos.y+'px';
-    const thumb=it.thumbnail?`<img src="${it.thumbnail}" alt="${it.title}" loading="lazy" style="width:100%;height:110px;object-fit:cover;display:block">`:'<div style="width:100%;height:110px;background:var(--surface2);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:20px">✦</div>';
-    const tags=(it.tags||[]).slice(0,2).map(t=>`<span style="font-size:9px;padding:1px 5px;border-radius:99px;background:var(--bg);color:var(--text2);border:1px solid var(--border)">${t}</span>`).join('');
-    card.innerHTML=`${thumb}<div style="padding:8px 10px"><div style="font-size:11px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px">${it.title}</div><div style="display:flex;flex-wrap:wrap;gap:3px">${tags}</div></div>`;
+    const thumb=it.thumbnail?`<img src="${it.thumbnail}" alt="${it.title}" loading="lazy" style="width:100%;display:block;border-radius:10px 10px 0 0">`:'<div style="width:100%;height:120px;background:var(--surface2);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:20px;border-radius:10px 10px 0 0">✦</div>';
+    const tags=(it.tags||[]).map(t=>`<span style="font-size:9px;padding:1px 5px;border-radius:99px;background:var(--bg);color:var(--text2);border:1px solid var(--border);display:inline-block;margin-bottom:2px">${t}</span>`).join('');
+    card.innerHTML=`${thumb}<div style="padding:8px 10px"><div style="font-size:11px;font-weight:500;margin-bottom:5px">${it.title}</div><div style="display:flex;flex-wrap:wrap;gap:3px">${tags}</div></div>`;
     let isDragging=false,dragStart={x:0,y:0},cardStart={x:0,y:0};
     card.addEventListener('mousedown',e=>{e.stopPropagation();isDragging=true;dragStart={x:e.clientX,y:e.clientY};cardStart={...pos};card.classList.add('dragging')});
     document.addEventListener('mousemove',e=>{if(!isDragging)return;const dx=(e.clientX-dragStart.x)/canvasScale;const dy=(e.clientY-dragStart.y)/canvasScale;pos.x=cardStart.x+dx;pos.y=cardStart.y+dy;card.style.left=pos.x+'px';card.style.top=pos.y+'px'});
@@ -824,8 +833,9 @@ function renderCanvas(){
       if(!isDragging)return;
       isDragging=false;card.classList.remove('dragging');
       const moved=Math.abs(e.clientX-dragStart.x)+Math.abs(e.clientY-dragStart.y)>5;
-      canvasPositions[it.id]={x:pos.x,y:pos.y};
-      localStorage.setItem(STORAGE_CANVAS,JSON.stringify(canvasPositions));
+      canvasBoards[currentCanvasBoard]=canvasBoards[currentCanvasBoard]||{};
+      canvasBoards[currentCanvasBoard][it.id]={x:pos.x,y:pos.y};
+      localStorage.setItem(STORAGE_CANVAS,JSON.stringify(canvasBoards));
       if(!moved)openDetail(it.id);
     });
     inner.appendChild(card);
@@ -927,6 +937,45 @@ function selectAcItem(tag){
 document.addEventListener('click',e=>{if(!e.target.closest('.field'))document.getElementById('tag-ac').className='autocomplete-list'});
 
 // ── RENDER ──
+// ── CANVAS BOARDS ──
+function renderCanvasBoards(){
+  const bar=document.getElementById('canvas-boards-bar');
+  bar.style.display='flex';
+  const tabs=document.getElementById('canvas-tabs');tabs.innerHTML='';
+  Object.keys(canvasBoards).forEach(boardId=>{
+    const tab=document.createElement('div');
+    tab.style.cssText=`display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;font-size:11px;cursor:pointer;border:1px solid var(--border);background:${boardId===currentCanvasBoard?'var(--accent)':'var(--surface)'};color:${boardId===currentCanvasBoard?'#fff':'var(--text2)'}`;
+    const name=canvasBoardNames[boardId]||boardId;
+    tab.innerHTML=`<span>${name}</span>`;
+    if(boardId===currentCanvasBoard){
+      const resetBtn=document.createElement('span');resetBtn.textContent='↺';resetBtn.title='초기화';resetBtn.style.cssText='cursor:pointer;opacity:.7;font-size:13px';
+      resetBtn.onclick=e=>{e.stopPropagation();if(confirm('이 캔버스 배치를 초기화할까요?')){canvasBoards[boardId]={};localStorage.setItem(STORAGE_CANVAS,JSON.stringify(canvasBoards));renderCanvas()}};
+      tab.appendChild(resetBtn);
+      if(Object.keys(canvasBoards).length>1){
+        const delBtn=document.createElement('span');delBtn.textContent='×';delBtn.style.cssText='cursor:pointer;opacity:.7';
+        delBtn.onclick=e=>{e.stopPropagation();if(confirm('이 캔버스를 삭제할까요?')){delete canvasBoards[boardId];delete canvasBoardNames[boardId];currentCanvasBoard=Object.keys(canvasBoards)[0];localStorage.setItem(STORAGE_CANVAS,JSON.stringify(canvasBoards));localStorage.setItem(STORAGE_CANVAS+'_names',JSON.stringify(canvasBoardNames));renderCanvasBoards();renderCanvas()}};
+        tab.appendChild(delBtn);
+      }
+    }
+    tab.onclick=()=>{currentCanvasBoard=boardId;renderCanvasBoards();renderCanvas()};
+    tabs.appendChild(tab);
+  });
+}
+
+function addCanvasBoard(){
+  const name=prompt('새 캔버스 이름을 입력해주세요 (예: 봄/여름 레퍼런스)');
+  if(!name)return;
+  const id='board_'+Date.now();
+  canvasBoards[id]={};
+  canvasBoardNames[id]=name;
+  currentCanvasBoard=id;
+  localStorage.setItem(STORAGE_CANVAS,JSON.stringify(canvasBoards));
+  localStorage.setItem(STORAGE_CANVAS+'_names',JSON.stringify(canvasBoardNames));
+  renderCanvasBoards();
+  renderCanvas();
+}
+
+
 function render(){
   const vis=items.filter(matchesItem);
   document.getElementById('stats').innerHTML=`<div class="stat"><strong>${vis.length}<span style="font-size:12px;color:var(--text3);font-weight:400">/${items.length}</span></strong>표시 중</div><div class="stat"><strong>${getAllTagsFlat().length}</strong>태그</div><div class="stat"><strong>${allColorsFlat().length}</strong>컬러</div>`;
@@ -968,7 +1017,7 @@ function render(){
     const thumb=it.thumbnail?`<img src="${it.thumbnail}" alt="${it.title}" loading="lazy">`:'<span style="font-size:26px;opacity:.3">*</span>';
     const imgCnt=(it.image_count||0)>1?`<span class="img-c">${it.image_count}</span>`:'';
     const ov=`<div class="sel-overlay${selForGen.has(it.id)?' show':''}" id="ov_${it.id}"><div class="sel-check">v</div></div>`;
-    const tags=(it.tags||[]).slice(0,3).map(t=>`<span class="ctag${activeTags.has(t)?' match':''}">${t}</span>`).join('');
+    const tags=(it.tags||[]).map(t=>`<span class="ctag${activeTags.has(t)?' match':''}">${t}</span>`).join('');
     const sw=(it.colors||[]).map(c=>`<div class="cswatch${activeColors.has(c)?' match':''}" style="background:${getColorHex(c)}" title="${c}"></div>`).join('');
     card.innerHTML=`<div class="ct">${thumb}${imgCnt}${ov}</div><div class="cb"><div class="ctitle">${it.title}</div><div class="csrc">${it.source||''}</div><div class="ctags">${tags}</div><div class="csw">${sw}</div></div>`;
     grid.appendChild(card);
@@ -1097,7 +1146,7 @@ function addExtraImg(input,ctx){
 }
 
 async function generateImage(ctx){
-  if(!GEM_KEY){alert('Gemini API 키가 없어요.');return}
+  if(!GEM_KEY){alert('Gemini API 키가 없어요. 설정에서 추가해주세요.');return}
   const sel=ctx==='creation'?workspaceIds.map(id=>items.find(x=>x.id===id)).filter(Boolean):items.filter(it=>selForGen.has(it.id));
   if(!sel.length){alert('레퍼런스를 선택해주세요');return}
   const st=document.getElementById('gen-status-'+ctx);
@@ -1105,22 +1154,47 @@ async function generateImage(ctx){
   const tags=[...new Set(sel.flatMap(it=>it.tags||[]))].slice(0,8).join(', ');
   const colors=[...new Set(sel.flatMap(it=>it.colors||[]))].slice(0,4).join(', ');
   const notes=sel.map(it=>it.description).filter(Boolean).join(' ').slice(0,200);
-  const prompt=`Fashion design reference. Style: ${tags}. Colors: ${colors}. ${notes}. ${extra}. High quality fashion photograph.`;
-  st.className='status show';st.innerHTML='<span class="spin"></span> Gemini로 이미지 생성 중... (5~15초)';
+  const prompt=`Fashion design image. Style inspiration: ${tags}. Color palette: ${colors}. ${notes}. ${extra}. High quality fashion photograph, studio lighting, clean background.`;
+  st.className='status show';st.innerHTML='<span class="spin"></span> Gemini로 이미지 생성 중... (10~20초)';
   document.getElementById('gen-res-'+ctx).className='gen-res';
-  const parts=[{text:prompt}];
-  (extraImgs[ctx]||[]).forEach(img=>parts.push({inline_data:{mime_type:'image/jpeg',data:img.split(',')[1]}}));
-  try{
-    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp-image-generation:generateContent?key=${GEM_KEY}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts}],generationConfig:{responseModalities:['IMAGE','TEXT']}})});
-    if(!res.ok){const e=await res.json();throw new Error(e.error?.message||'API 오류')}
-    const data=await res.json();const imgPart=data.candidates?.[0]?.content?.parts?.find(p=>p.inlineData);
-    if(!imgPart)throw new Error('이미지 생성 실패');
-    const generated='data:'+imgPart.inlineData.mimeType+';base64,'+imgPart.inlineData.data;
-    generatedImgs[ctx]=generated;
-    document.getElementById('gen-img-'+ctx).src=generated;
-    document.getElementById('gen-res-'+ctx).className='gen-res show';
-    st.className='status done';st.innerHTML='완료!';
-  }catch(e){st.className='status error';st.innerHTML='실패: '+e.message}
+  const extraList=extraImgs[ctx]||[];
+
+  // Try imagen3 first, fallback to gemini flash
+  const models=['imagen-3.0-generate-002','gemini-2.0-flash-exp-image-generation'];
+  for(const model of models){
+    try{
+      let body,endpoint;
+      if(model.startsWith('imagen')){
+        endpoint=`https://generativelanguage.googleapis.com/v1beta/models/${model}:predict?key=${GEM_KEY}`;
+        body={instances:[{prompt}],parameters:{sampleCount:1}};
+      } else {
+        endpoint=`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEM_KEY}`;
+        const parts=[{text:prompt}];
+        extraList.forEach(img=>parts.push({inline_data:{mime_type:'image/jpeg',data:img.split(',')[1]}}));
+        body={contents:[{parts}],generationConfig:{responseModalities:['IMAGE','TEXT']}};
+      }
+      const res=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+      if(!res.ok){const e=await res.json();throw new Error(e.error?.message||`${model} 오류`)}
+      const data=await res.json();
+      let generated=null;
+      if(model.startsWith('imagen')){
+        const pred=data.predictions?.[0];
+        if(pred?.bytesBase64Encoded)generated='data:image/png;base64,'+pred.bytesBase64Encoded;
+      } else {
+        const imgPart=data.candidates?.[0]?.content?.parts?.find(p=>p.inlineData);
+        if(imgPart)generated='data:'+imgPart.inlineData.mimeType+';base64,'+imgPart.inlineData.data;
+      }
+      if(!generated)throw new Error('이미지 없음');
+      generatedImgs[ctx]=generated;
+      document.getElementById('gen-img-'+ctx).src=generated;
+      document.getElementById('gen-res-'+ctx).className='gen-res show';
+      st.className='status done';st.innerHTML='✓ 생성 완료!';
+      return;
+    }catch(e){
+      if(model===models[models.length-1]){st.className='status error';st.innerHTML='⚠ 생성 실패: '+e.message+'<br><span style="font-size:11px">Gemini API 키가 이미지 생성을 지원하는지 확인해주세요 (Google AI Studio에서 발급한 키 사용)</span>'}
+      else st.innerHTML='<span class="spin"></span> 다른 모델로 재시도 중...';
+    }
+  }
 }
 function saveGenerated(ctx){const img=generatedImgs[ctx];if(!img)return;pendingImg=img;openAdd();document.getElementById('drop-prev').innerHTML=`<img src="${img}">`;document.getElementById('f-source').value='AI generated';document.getElementById('ff').className='ff show'}
 
