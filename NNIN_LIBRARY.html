@@ -1160,30 +1160,21 @@ async function generateImage(ctx){
   const extraList=extraImgs[ctx]||[];
 
   // Try imagen3 first, fallback to gemini flash
-  const models=['imagen-3.0-generate-002','gemini-2.0-flash-exp-image-generation'];
+  const models=['gemini-2.5-flash-preview-05-20','gemini-2.0-flash-exp-image-generation','gemini-3.1-flash-image'];
   for(const model of models){
     try{
       let body,endpoint;
-      if(model.startsWith('imagen')){
-        endpoint=`https://generativelanguage.googleapis.com/v1beta/models/${model}:predict?key=${GEM_KEY}`;
-        body={instances:[{prompt}],parameters:{sampleCount:1}};
-      } else {
+      // All models use generateContent with responseModalities
         endpoint=`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEM_KEY}`;
         const parts=[{text:prompt}];
         extraList.forEach(img=>parts.push({inline_data:{mime_type:'image/jpeg',data:img.split(',')[1]}}));
         body={contents:[{parts}],generationConfig:{responseModalities:['IMAGE','TEXT']}};
-      }
       const res=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
       if(!res.ok){const e=await res.json();throw new Error(e.error?.message||`${model} 오류`)}
       const data=await res.json();
       let generated=null;
-      if(model.startsWith('imagen')){
-        const pred=data.predictions?.[0];
-        if(pred?.bytesBase64Encoded)generated='data:image/png;base64,'+pred.bytesBase64Encoded;
-      } else {
-        const imgPart=data.candidates?.[0]?.content?.parts?.find(p=>p.inlineData);
+      const imgPart=data.candidates?.[0]?.content?.parts?.find(p=>p.inlineData);
         if(imgPart)generated='data:'+imgPart.inlineData.mimeType+';base64,'+imgPart.inlineData.data;
-      }
       if(!generated)throw new Error('이미지 없음');
       generatedImgs[ctx]=generated;
       document.getElementById('gen-img-'+ctx).src=generated;
