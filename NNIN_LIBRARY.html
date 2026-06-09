@@ -2,252 +2,352 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>NNIN LIBRARY</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#f7f7f5;--surface:#fff;--border:#e8e8e5;--border2:#d0d0cc;--text:#1a1a1a;--text2:#666;--text3:#aaa;--accent:#1a1a1a;--r:10px;--rl:14px}
-body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
+:root{--bg:#f2f2f0;--surface:#fff;--surface2:#fafaf8;--border:#e5e5e2;--border2:#ccccc8;--text:#111;--text2:#555;--text3:#999;--accent:#111;--accent2:#333;--info:#2563eb;--infobg:#eff6ff;--success:#16a34a;--successbg:#f0fdf4;--danger:#dc2626;--dangerbg:#fef2f2;--r:8px;--rl:12px;--rxl:16px}
+body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;-webkit-font-smoothing:antialiased}
 
 /* SETUP */
 #setup{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:1.5rem}
-.setup-card{background:var(--surface);border-radius:20px;border:1px solid var(--border);padding:2rem;max-width:460px;width:100%}
-.setup-card h1{font-size:20px;font-weight:600;margin-bottom:6px;letter-spacing:-.02em}
-.setup-card p{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:1.5rem}
-.sf{margin-bottom:12px}
-.sf label{display:block;font-size:11px;color:var(--text3);margin-bottom:4px;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
-.sf input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--r);font-size:13px;font-family:monospace;background:#fafafa;color:var(--text)}
+.setup-wrap{width:100%;max-width:420px}
+.setup-logo{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--text3);margin-bottom:2rem;text-align:center}
+.setup-card{background:var(--surface);border-radius:var(--rxl);border:1px solid var(--border);padding:1.75rem}
+.setup-card h2{font-size:18px;font-weight:600;margin-bottom:4px;letter-spacing:-.02em}
+.setup-card>p{font-size:12px;color:var(--text3);margin-bottom:1.5rem;line-height:1.6}
+.sf{margin-bottom:10px}
+.sf label{display:block;font-size:10px;color:var(--text3);margin-bottom:3px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.sf input{width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:var(--r);font-size:12px;font-family:monospace;background:var(--surface2);color:var(--text)}
 .sf input:focus{outline:2px solid var(--accent);border-color:transparent}
-.opt-box{border:1px solid var(--border);border-radius:var(--r);padding:1rem;margin-bottom:16px}
-.opt-box h3{font-size:12px;font-weight:600;margin-bottom:3px}
-.opt-box p{font-size:11px;color:var(--text3);margin-bottom:10px;line-height:1.5}
-.btn-start{width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:var(--r);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
-.setup-note{font-size:11px;color:var(--text3);text-align:center;margin-top:10px;line-height:1.5}
+.opt-box{border:1px solid var(--border);border-radius:var(--r);padding:.875rem;margin-bottom:10px}
+.opt-box-title{font-size:11px;font-weight:600;margin-bottom:2px}
+.opt-box-desc{font-size:11px;color:var(--text3);margin-bottom:10px;line-height:1.5}
+.btn-start{width:100%;padding:11px;background:var(--accent);color:#fff;border:none;border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:4px}
+.setup-note{font-size:10px;color:var(--text3);text-align:center;margin-top:10px;line-height:1.6}
 
 /* APP */
 #app{display:none}
-header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 1.25rem;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.logo{font-size:14px;font-weight:700;letter-spacing:.06em}
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 1.25rem;height:50px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-size:12px;font-weight:700;letter-spacing:.14em}
 .hbtns{display:flex;gap:6px;align-items:center}
-.btn{padding:7px 13px;border-radius:8px;font-size:12px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text);font-family:inherit;transition:all .15s;white-space:nowrap}
-.btn:hover{background:var(--bg)}
+.btn{padding:6px 12px;border-radius:var(--r);font-size:12px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text);font-family:inherit;transition:all .12s;white-space:nowrap}
+.btn:hover{background:var(--bg);border-color:var(--border2)}
 .btn-dark{background:var(--accent);color:#fff;border-color:var(--accent)}
-.btn-dark:hover{opacity:.85}
-.btn-danger{color:#cc2200;border-color:#fcc}
-.btn-danger:hover{background:#fff0ee}
-.view-toggle{display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden}
-.vt{padding:6px 11px;font-size:12px;cursor:pointer;border:none;background:var(--surface);color:var(--text2);font-family:inherit;transition:all .15s}
+.btn-dark:hover{background:var(--accent2);border-color:var(--accent2)}
+.btn-danger{color:var(--danger);border-color:#fca5a5}
+.btn-danger:hover{background:var(--dangerbg)}
+.btn-sm{padding:4px 9px;font-size:11px}
+.view-toggle{display:flex;border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.vt{padding:6px 11px;font-size:11px;cursor:pointer;border:none;background:var(--surface);color:var(--text2);font-family:inherit;transition:all .12s}
 .vt.active{background:var(--accent);color:#fff}
 
-main{max-width:1200px;margin:0 auto;padding:1.25rem;display:grid;grid-template-columns:240px 1fr;gap:1.25rem}
-@media(max-width:768px){main{grid-template-columns:1fr}}
+main{max-width:1280px;margin:0 auto;padding:1.25rem;display:grid;grid-template-columns:220px 1fr;gap:1.25rem;align-items:start}
+@media(max-width:800px){main{grid-template-columns:1fr;padding:1rem}}
 
 /* SIDEBAR */
-.sidebar{display:flex;flex-direction:column;gap:10px}
-.sb-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:1rem}
-.sb-card h3{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
-.sb-card h3 button{font-size:10px;padding:2px 7px;border-radius:99px;background:var(--bg);border:1px solid var(--border);cursor:pointer;color:var(--text2);font-family:inherit}
-.search-wrap{position:relative}
-.search-wrap input{width:100%;padding:8px 10px 8px 30px;border:1px solid var(--border);border-radius:8px;font-size:12px;background:var(--bg);color:var(--text);font-family:inherit}
+.sidebar{display:flex;flex-direction:column;gap:8px;position:sticky;top:62px}
+@media(max-width:800px){.sidebar{position:static}}
+.sb-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.sb-header{padding:.75rem 1rem;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.sb-header:hover{background:var(--bg)}
+.sb-title{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;display:flex;align-items:center;gap:6px}
+.sb-badge{background:var(--accent);color:#fff;font-size:9px;padding:1px 5px;border-radius:99px;display:none}
+.sb-actions{display:flex;gap:4px;align-items:center}
+.sb-chevron{font-size:10px;color:var(--text3);transition:transform .2s;display:inline-block}
+.sb-chevron.open{transform:rotate(180deg)}
+.sb-body{border-top:1px solid var(--border)}
+.sb-body.collapsed{display:none}
+.sb-inner{padding:.75rem 1rem}
+.search-wrap{position:relative;padding:.75rem 1rem}
+.search-wrap input{width:100%;padding:7px 10px 7px 28px;border:1px solid var(--border);border-radius:var(--r);font-size:12px;background:var(--surface2);color:var(--text);font-family:inherit}
 .search-wrap input:focus{outline:2px solid var(--accent);border-color:transparent}
-.si{position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--text3)}
+.si{position:absolute;left:22px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--text3);pointer-events:none}
 
 /* TREE */
 .tree{font-size:12px}
-.tree-node{user-select:none}
-.tree-row{display:flex;align-items:center;gap:4px;padding:3px 4px;border-radius:6px;cursor:pointer;color:var(--text2);transition:all .15s}
+.tree-node{margin-bottom:1px}
+.tree-row{display:flex;align-items:center;gap:4px;padding:4px 5px;border-radius:6px;cursor:pointer;color:var(--text2);transition:all .12s;position:relative;group:true}
 .tree-row:hover{background:var(--bg);color:var(--text)}
 .tree-row.active{background:var(--accent);color:#fff}
-.tree-row.partial{background:var(--bg);color:var(--text);font-weight:500}
-.tree-toggle{width:14px;height:14px;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text3);flex-shrink:0}
+.tree-row.active .tree-count{color:rgba(255,255,255,.5)}
+.tree-toggle{width:14px;height:14px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--text3);flex-shrink:0;border-radius:3px}
 .tree-label{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tree-count{font-size:10px;color:var(--text3);flex-shrink:0}
-.tree-children{padding-left:16px;border-left:1px solid var(--border);margin-left:7px}
-.tree-hint{font-size:10px;color:var(--text3);padding:4px 4px;font-style:italic}
+.tree-count{font-size:10px;color:var(--text3);flex-shrink:0;min-width:14px;text-align:right}
+.tree-edit-btn{display:none;position:absolute;right:4px;font-size:10px;padding:1px 6px;border-radius:4px;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer;font-family:inherit}
+.tree-row:hover .tree-edit-btn{display:block}
+.tree-row.active .tree-edit-btn{display:none}
+.tree-children{padding-left:14px;border-left:1px solid var(--border);margin-left:7px;margin-top:1px}
+.tree-add-row{display:flex;gap:4px;padding:3px 4px;margin-top:2px}
+.tree-add-row input{flex:1;font-size:11px;padding:3px 7px;border-radius:5px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-family:inherit}
+.tree-add-row input:focus{outline:1px solid var(--accent);border-color:transparent}
+.tree-add-btn{font-size:11px;padding:3px 8px;border-radius:5px;border:1px solid var(--border);background:var(--surface);cursor:pointer;color:var(--text2);font-family:inherit}
+.tree-edit-inline{display:flex;gap:4px;padding:3px 4px}
+.tree-edit-inline input{flex:1;font-size:11px;padding:3px 7px;border-radius:5px;border:1px solid var(--accent);background:var(--surface);color:var(--text);font-family:inherit}
 
-/* COLOR FILTER */
-.color-grid{display:flex;flex-wrap:wrap;gap:6px}
+/* COLOR */
+.color-grid{display:flex;flex-wrap:wrap;gap:7px}
 .cdot-w{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
-.cdot{width:20px;height:20px;border-radius:50%;border:2px solid transparent;transition:all .15s}
+.cdot{width:20px;height:20px;border-radius:50%;border:2px solid transparent;transition:all .12s}
+.cdot:hover{transform:scale(1.1)}
 .cdot.active{border-color:var(--accent);transform:scale(1.15)}
-.cdot-n{font-size:8px;color:var(--text3);max-width:32px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}
+.cdn{font-size:8px;color:var(--text3);max-width:34px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}
 
-/* STATS */
-.stats-row{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap}
-.stat{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:10px;color:var(--text3)}
-.stat strong{display:block;font-size:18px;font-weight:600;color:var(--text);margin-bottom:1px;letter-spacing:-.01em}
-.active-bar{font-size:11px;color:var(--text2);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 10px;margin-bottom:1rem;display:none;align-items:center;gap:6px;flex-wrap:wrap}
-.active-bar.show{display:flex}
-.abar-tag{display:flex;align-items:center;gap:4px;background:var(--bg);padding:2px 8px;border-radius:99px;font-size:11px}
-.abar-tag button{border:none;background:none;cursor:pointer;font-size:12px;color:var(--text3);padding:0;line-height:1}
-
-/* GRID */
+/* CONTENT */
 .content{min-width:0}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:10px}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;cursor:pointer;transition:all .15s}
-.card:hover{border-color:var(--border2);transform:translateY(-1px)}
-.ct{width:100%;aspect-ratio:1;overflow:hidden;background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px;position:relative}
+.toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px}
+.toolbar-left{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.stats-row{display:flex;gap:6px;flex-wrap:wrap}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:7px 12px;font-size:10px;color:var(--text3)}
+.stat strong{display:block;font-size:17px;font-weight:600;color:var(--text);margin-bottom:1px}
+.active-bar{font-size:11px;color:var(--text2);background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:6px 10px;margin-bottom:1rem;display:none;align-items:center;gap:5px;flex-wrap:wrap}
+.active-bar.show{display:flex}
+.abar-tag{display:inline-flex;align-items:center;gap:3px;background:var(--bg);padding:2px 7px;border-radius:99px;font-size:11px;border:1px solid var(--border)}
+.abar-tag button{border:none;background:none;cursor:pointer;font-size:13px;color:var(--text3);padding:0;line-height:1}
+
+/* ZOOM CONTROLS */
+.zoom-controls{display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:3px 8px}
+.zoom-btn{border:none;background:none;cursor:pointer;font-size:14px;color:var(--text2);padding:2px 4px;border-radius:4px;font-family:inherit;line-height:1}
+.zoom-btn:hover{background:var(--bg);color:var(--text)}
+.zoom-val{font-size:11px;color:var(--text2);min-width:36px;text-align:center;cursor:pointer;user-select:none}
+.col-controls{display:flex;align-items:center;gap:4px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:3px 8px}
+.col-btn{border:none;background:none;cursor:pointer;font-size:11px;color:var(--text2);padding:2px 5px;border-radius:4px;font-family:inherit}
+.col-btn:hover{background:var(--bg);color:var(--text)}
+.col-btn.active{background:var(--accent);color:#fff}
+
+/* GRID VIEW */
+#grid-view{position:relative}
+.grid-scaler{transform-origin:top left;transition:transform .1s}
+.grid{display:grid;gap:10px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;cursor:pointer;transition:border-color .15s,transform .15s;position:relative}
+.card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.card.selected{border-color:var(--accent);border-width:2px}
+.ct{width:100%;aspect-ratio:1;overflow:hidden;background:var(--surface2);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:26px;position:relative}
 .ct img{width:100%;height:100%;object-fit:cover}
-.img-c{position:absolute;bottom:5px;right:5px;background:rgba(0,0,0,.5);color:#fff;font-size:9px;padding:2px 5px;border-radius:99px}
-.cb{padding:9px 11px}
+.img-c{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.55);color:#fff;font-size:9px;padding:2px 6px;border-radius:99px}
+.sel-overlay{position:absolute;inset:0;background:rgba(17,17,17,.3);display:none;align-items:center;justify-content:center}
+.sel-overlay.show{display:flex}
+.sel-check{width:22px;height:22px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px}
+.cb{padding:10px 11px}
 .ctitle{font-size:12px;font-weight:500;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.csrc{font-size:10px;color:var(--text3);margin-bottom:5px}
-.ctags{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:5px}
+.csrc{font-size:10px;color:var(--text3);margin-bottom:6px}
+.ctags{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px}
 .ctag{font-size:9px;padding:2px 6px;border-radius:99px;background:var(--bg);color:var(--text2);border:1px solid var(--border)}
-.ctag.match{background:#e8f0fe;color:#1a56db;border-color:#c3d7fe}
-.csw{display:flex;gap:3px}
+.ctag.match{background:var(--infobg);color:var(--info);border-color:#bfdbfe}
+.csw{display:flex;gap:3px;flex-wrap:wrap}
 .cswatch{width:12px;height:12px;border-radius:3px;border:1px solid rgba(0,0,0,.08)}
 .cswatch.match{outline:2px solid var(--accent);outline-offset:1px}
-.empty{text-align:center;padding:3rem 1rem;color:var(--text3);font-size:13px;grid-column:1/-1}
+.empty{text-align:center;padding:4rem 1rem;color:var(--text3);font-size:13px;grid-column:1/-1;line-height:2}
+
+/* CANVAS VIEW */
+#canvas-view{display:none;position:relative;width:100%;height:calc(100vh - 120px);min-height:500px;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);cursor:grab}
+#canvas-view.grabbing{cursor:grabbing}
+.canvas-inner{position:absolute;top:0;left:0;transform-origin:0 0;will-change:transform}
+.canvas-card{position:absolute;background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;cursor:pointer;width:180px;box-shadow:0 2px 8px rgba(0,0,0,.06);transition:border-color .15s,box-shadow .15s;user-select:none}
+.canvas-card:hover{border-color:var(--border2);box-shadow:0 4px 16px rgba(0,0,0,.1)}
+.canvas-card.dragging{box-shadow:0 8px 32px rgba(0,0,0,.16);border-color:var(--border2);z-index:1000;cursor:grabbing}
+.canvas-card.selected{border-color:var(--accent);border-width:2px}
+.canvas-card.highlight{border-color:var(--accent);border-width:2px;box-shadow:0 0 0 3px rgba(17,17,17,.1)}
+.canvas-bg{position:absolute;inset:0;background-image:radial-gradient(circle,#d0d0cc 1px,transparent 1px);background-size:24px 24px;opacity:.5;pointer-events:none}
+.canvas-empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:var(--text3);font-size:13px;pointer-events:none;line-height:2}
+.canvas-hint{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--text3);background:var(--surface);border:1px solid var(--border);border-radius:99px;padding:4px 12px;pointer-events:none;opacity:.8}
 
 /* MINDMAP */
-.mindmap-wrap{display:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--rl)}
-.mindmap-wrap.show{display:block}
+#mind-view{display:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--rl)}
+#mind-view.show{display:block}
 .mm-top{padding:.875rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
-.mm-top input{flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-size:12px;background:var(--bg);color:var(--text);font-family:inherit}
+.mm-top input{flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:var(--r);font-size:12px;background:var(--surface2);color:var(--text);font-family:inherit}
 .mm-top input:focus{outline:2px solid var(--accent);border-color:transparent}
-.mm-canvas{position:relative;width:100%;height:480px;overflow:hidden}
+.mm-canvas{position:relative;width:100%;height:460px;overflow:hidden}
 .mm-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .mm-node{position:absolute;border-radius:var(--rl);border:1px solid var(--border);background:var(--surface);cursor:pointer;transition:all .2s}
 .mm-node:hover{border-color:var(--border2);transform:scale(1.02)}
 .mm-node.center{background:var(--accent);color:#fff;border-color:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center}
-.mm-node.sel{border-color:var(--accent);border-width:2px}
-.mm-img{width:100%;height:75px;object-fit:cover;border-radius:10px 10px 0 0}
-.mm-body{padding:5px 7px}
+.mm-node.sel{border-color:var(--accent);border-width:2px;box-shadow:0 0 0 3px rgba(17,17,17,.1)}
+.mm-img{width:100%;height:72px;object-fit:cover;border-radius:10px 10px 0 0}
+.mm-body{padding:6px 8px}
 .mm-title{font-size:10px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mm-tags{display:flex;flex-wrap:wrap;gap:2px;margin-top:2px}
 .mm-tag{font-size:8px;padding:1px 4px;border-radius:99px;background:var(--bg);color:var(--text3)}
-.mm-empty{display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:8px;color:var(--text3);font-size:12px}
+.mm-empty{display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:8px;color:var(--text3);font-size:12px;line-height:2}
+
+/* CREATION MODE */
+#creation-view{display:none}
+#creation-view.show{display:block}
+.creation-header{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:1rem 1.25rem;margin-bottom:1rem;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.creation-title{font-size:14px;font-weight:600;flex:1}
+.creation-body{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:800px){.creation-body{grid-template-columns:1fr}}
+.creation-main{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.creation-main-img{width:100%;max-height:400px;object-fit:contain;background:var(--surface2)}
+.creation-main-info{padding:1rem}
+.creation-similar{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.creation-similar-header{padding:.875rem 1rem;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:space-between}
+.creation-similar-grid{padding:.75rem;display:grid;grid-template-columns:repeat(2,1fr);gap:8px;max-height:500px;overflow-y:auto}
+.sim-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:all .12s}
+.sim-card:hover{border-color:var(--border2);transform:translateY(-1px)}
+.sim-card.picked{border-color:var(--accent);border-width:2px;background:var(--infobg)}
+.sim-thumb{width:100%;aspect-ratio:1;overflow:hidden;background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:18px}
+.sim-thumb img{width:100%;height:100%;object-fit:cover}
+.sim-info{padding:6px 8px}
+.sim-title{font-size:10px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px}
+.sim-score{font-size:9px;color:var(--text3)}
+.sim-tags{display:flex;flex-wrap:wrap;gap:2px;margin-top:3px}
+.sim-tag{font-size:8px;padding:1px 5px;border-radius:99px;background:var(--bg);color:var(--text2);border:1px solid var(--border)}
+.sim-tag.shared{background:var(--infobg);color:var(--info);border-color:#bfdbfe}
+.creation-workspace{margin-top:1rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:1.25rem}
+.workspace-title{font-size:12px;font-weight:600;margin-bottom:.75rem;display:flex;align-items:center;gap:8px}
+.workspace-board{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;min-height:160px;align-items:flex-start}
+.ws-card{flex-shrink:0;width:140px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;position:relative}
+.ws-card .ws-thumb{width:100%;height:100px;overflow:hidden;background:var(--bg)}
+.ws-card .ws-thumb img{width:100%;height:100%;object-fit:cover}
+.ws-card .ws-remove{position:absolute;top:4px;right:4px;width:18px;height:18px;background:rgba(0,0,0,.55);color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center}
+.ws-card .ws-label{padding:5px 7px;font-size:9px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ws-add-btn{flex-shrink:0;width:140px;height:130px;background:var(--surface2);border:1.5px dashed var(--border2);border-radius:var(--r);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text3);font-size:24px;transition:all .12s}
+.ws-add-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--bg)}
+.creation-actions{display:flex;gap:8px;margin-top:1rem;flex-wrap:wrap}
 
 /* AI GEN */
-.gen-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:1rem;margin-top:10px;display:none}
-.gen-panel.show{display:block}
-.gen-panel h4{font-size:12px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:6px}
-.gen-panel p{font-size:11px;color:var(--text3);margin-bottom:10px;line-height:1.5}
-.gen-sel{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;min-height:14px}
-.gsel{font-size:10px;padding:2px 8px;border-radius:99px;background:var(--bg);border:1px solid var(--border);color:var(--text2)}
+.gen-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:1.25rem;margin-top:1rem}
+.gen-panel-title{font-size:12px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.gen-panel-desc{font-size:11px;color:var(--text3);margin-bottom:12px;line-height:1.5}
+.gen-refs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;min-height:16px}
+.gen-ref-tag{font-size:10px;padding:3px 9px;border-radius:99px;background:var(--bg);border:1px solid var(--border);color:var(--text2);display:flex;align-items:center;gap:4px;cursor:pointer}
+.gen-extra{margin-bottom:10px}
+.gen-extra-label{font-size:10px;color:var(--text3);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.gen-extra-imgs{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.gen-extra-img-wrap{position:relative}
+.gen-extra-img{width:50px;height:50px;border-radius:var(--r);object-fit:cover;border:1px solid var(--border)}
+.gen-extra-img-rm{position:absolute;top:-4px;right:-4px;width:14px;height:14px;background:var(--danger);color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:9px;display:flex;align-items:center;justify-content:center}
+.gen-extra-add{width:50px;height:50px;border-radius:var(--r);border:1.5px dashed var(--border2);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text3);font-size:20px;transition:all .12s}
+.gen-extra-add:hover{border-color:var(--accent);color:var(--accent)}
 .gen-row{display:flex;gap:8px}
-.gen-row input{flex:1;font-size:12px}
+.gen-row input{flex:1;font-size:12px;padding:8px 10px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:inherit}
+.gen-row input:focus{outline:2px solid var(--accent);border-color:transparent}
 .gen-res{margin-top:10px;display:none}
 .gen-res.show{display:block}
-.gen-res img{width:100%;max-height:260px;object-fit:contain;border-radius:8px;border:1px solid var(--border)}
+.gen-res img{width:100%;max-height:300px;object-fit:contain;border-radius:var(--r);border:1px solid var(--border)}
+.gen-toggle-row{margin-top:1rem;display:flex;gap:8px;justify-content:center}
+
+/* STATUS */
+.status{font-size:12px;border-radius:var(--r);padding:8px 10px;margin-bottom:10px;display:none;line-height:1.5}
+.status.show{display:block;background:var(--infobg);color:var(--info)}
+.status.done{background:var(--successbg);color:var(--success)}
+.status.error{background:var(--dangerbg);color:var(--danger)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{width:12px;height:12px;border:2px solid rgba(37,99,235,.25);border-top-color:var(--info);border-radius:50%;animation:spin .7s linear infinite;display:inline-block;vertical-align:-2px;margin-right:5px}
 
 /* MODALS */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-end;justify-content:center;padding:0}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:flex-end;justify-content:center}
 .overlay.open{display:flex}
 @media(min-width:600px){.overlay{align-items:center;padding:1rem}}
-.modal{background:var(--surface);border-radius:var(--rl) var(--rl) 0 0;width:100%;max-width:560px;max-height:92vh;overflow-y:auto;padding:1.25rem;position:relative}
-@media(min-width:600px){.modal{border-radius:var(--rl);max-height:88vh}}
-.handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 1rem}
-.mc{position:absolute;top:12px;right:12px;background:var(--bg);border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:var(--text2)}
-.modal-img{width:100%;max-height:260px;object-fit:contain;border-radius:8px;background:var(--bg);margin-bottom:1rem}
-.modal-title{font-size:16px;font-weight:600;margin-bottom:3px;letter-spacing:-.01em}
-.modal-src{font-size:12px;color:var(--text3);margin-bottom:.75rem}
-.slabel{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;margin:12px 0 5px;font-weight:600}
+.modal{background:var(--surface);border-radius:var(--rxl) var(--rxl) 0 0;width:100%;max-width:560px;max-height:92vh;overflow-y:auto;padding:1.25rem;position:relative}
+@media(min-width:600px){.modal{border-radius:var(--rxl);max-height:88vh}}
+.handle{width:32px;height:3px;background:var(--border2);border-radius:2px;margin:0 auto .875rem}
+.mc{position:absolute;top:12px;right:12px;background:var(--bg);border:1px solid var(--border);border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;color:var(--text2)}
+.modal-img{width:100%;max-height:260px;object-fit:contain;border-radius:var(--r);background:var(--surface2);margin-bottom:1rem}
+.modal-title{font-size:17px;font-weight:600;margin-bottom:3px;letter-spacing:-.02em}
+.modal-src{font-size:11px;color:var(--text3);margin-bottom:.75rem}
+.slabel{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin:12px 0 5px;font-weight:700}
 .modal-desc{font-size:13px;color:var(--text2);line-height:1.7}
 .modal-tags{display:flex;flex-wrap:wrap;gap:5px}
 .modal-tag{font-size:11px;padding:3px 10px;border-radius:99px;background:var(--bg);color:var(--text2);border:1px solid var(--border)}
 .modal-swatches{display:flex;gap:8px;flex-wrap:wrap}
 .msw-item{display:flex;flex-direction:column;align-items:center;gap:3px}
-.msw{width:28px;height:28px;border-radius:7px;border:1px solid rgba(0,0,0,.08)}
+.msw{width:26px;height:26px;border-radius:7px;border:1px solid rgba(0,0,0,.08)}
 .msw-n{font-size:9px;color:var(--text3)}
 .img-slides{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:.75rem}
-.islide{flex-shrink:0;width:90px;height:90px;border-radius:8px;overflow:hidden;border:1px solid var(--border)}
+.islide{flex-shrink:0;width:86px;height:86px;border-radius:var(--r);overflow:hidden;border:1px solid var(--border)}
 .islide img{width:100%;height:100%;object-fit:cover}
 .islide.saved{border:2px solid var(--accent)}
-.mbtns{display:flex;gap:8px;margin-top:1rem}
+.mbtns{display:flex;gap:8px;margin-top:1rem;flex-wrap:wrap}
 .mbtns .btn{flex:1;text-align:center}
-.ancestors{font-size:11px;color:var(--text2);background:var(--bg);border-radius:8px;padding:6px 10px;margin-bottom:.5rem;display:none}
-.ancestors.show{display:block}
-.anc-tag{display:inline-flex;align-items:center;gap:4px;margin-right:6px;cursor:pointer;color:var(--text2)}
-.anc-tag:hover{color:var(--accent)}
+.anc-bar{font-size:11px;color:var(--text2);background:var(--bg);border-radius:var(--r);padding:6px 10px;margin-bottom:.5rem;display:none;line-height:1.8}
+.anc-bar.show{display:block}
+.anc-link{cursor:pointer;color:var(--info);text-decoration:underline;margin-right:6px}
 
 /* ADD MODAL */
 .add-modal{max-width:500px}
-.add-modal h2{font-size:16px;font-weight:600;margin-bottom:1rem;letter-spacing:-.01em}
-.tabs{display:flex;gap:6px;margin-bottom:12px}
-.tab{flex:1;padding:8px;border-radius:8px;border:1px solid var(--border);background:var(--surface);cursor:pointer;font-family:inherit;font-size:12px;color:var(--text2);text-align:center;transition:all .15s}
+.add-modal h2{font-size:16px;font-weight:600;margin-bottom:1rem;letter-spacing:-.02em}
+.tabs{display:flex;gap:5px;margin-bottom:12px}
+.tab{flex:1;padding:7px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);cursor:pointer;font-family:inherit;font-size:11px;color:var(--text2);text-align:center;transition:all .12s}
 .tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-.field{margin-bottom:11px}
-.field label{display:block;font-size:10px;color:var(--text3);margin-bottom:3px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
-.field input,.field textarea,.field select{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;background:#fafafa;color:var(--text)}
+.field{margin-bottom:10px;position:relative}
+.field label{display:block;font-size:10px;color:var(--text3);margin-bottom:3px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.field input,.field textarea{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r);font-size:13px;font-family:inherit;background:var(--surface2);color:var(--text)}
 .field input:focus,.field textarea:focus{outline:2px solid var(--accent);border-color:transparent}
 .field textarea{resize:vertical;min-height:64px}
-.field .hint{font-size:10px;color:var(--text3);margin-top:3px}
+.field .hint{font-size:10px;color:var(--text3);margin-top:3px;line-height:1.4}
 .frow{display:flex;gap:8px}.frow .field{flex:1}
-.drop-zone{border:2px dashed var(--border);border-radius:var(--r);padding:1.5rem;text-align:center;cursor:pointer;color:var(--text3);font-size:13px;transition:all .15s;margin-bottom:10px;background:#fafafa}
+.drop-zone{border:1.5px dashed var(--border2);border-radius:var(--r);padding:1.5rem;text-align:center;cursor:pointer;color:var(--text3);font-size:12px;transition:all .12s;margin-bottom:10px;background:var(--surface2)}
 .drop-zone:hover{border-color:var(--accent);background:var(--bg)}
-.drop-zone img{max-width:100%;max-height:120px;border-radius:8px;margin-top:8px;display:block;margin-left:auto;margin-right:auto}
+.drop-zone img{max-width:100%;max-height:120px;border-radius:var(--r);margin-top:8px;display:block;margin-left:auto;margin-right:auto}
 .url-row{display:flex;gap:6px;margin-bottom:10px}
 .url-row input{flex:1;font-size:12px}
 .fetched{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
 .fimg-w{position:relative;cursor:pointer}
-.fimg{width:72px;height:72px;border-radius:8px;object-fit:cover;border:2px solid transparent;transition:all .15s}
+.fimg{width:70px;height:70px;border-radius:var(--r);object-fit:cover;border:2px solid transparent;transition:all .12s}
 .fimg.sel{border-color:var(--accent)}
 .fbadge{position:absolute;top:-4px;right:-4px;background:var(--accent);color:#fff;font-size:8px;width:14px;height:14px;border-radius:50%;display:none;align-items:center;justify-content:center}
 .ai-choice{display:none;gap:8px;margin-bottom:10px}
 .ai-choice.show{display:flex}
-.acb{flex:1;padding:9px 8px;border-radius:8px;border:1px solid var(--border);background:var(--surface);cursor:pointer;font-family:inherit;text-align:center;transition:all .15s}
-.acb:hover{border-color:var(--accent)}
-.acb .aci{font-size:18px;display:block;margin-bottom:3px}
+.acb{flex:1;padding:9px 8px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);cursor:pointer;font-family:inherit;text-align:center;transition:all .12s}
+.acb:hover{border-color:var(--border2)}
+.acb .aci{font-size:17px;display:block;margin-bottom:3px}
 .acb .act{font-size:11px;font-weight:600;color:var(--text);display:block;margin-bottom:1px}
 .acb .acs{font-size:10px;color:var(--text3);display:block}
-.status{font-size:12px;border-radius:8px;padding:8px 10px;margin-bottom:10px;display:none;line-height:1.5}
-.status.show{display:block;background:#e8f0fe;color:#1a56db}
-.status.done{background:#e8f5e9;color:#1b5e20}
-.status.error{background:#fff0ee;color:#cc2200}
 .ff{display:none}.ff.show{display:block}
 .cprev{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}
 .cp-i{display:flex;flex-direction:column;align-items:center;gap:2px}
-.cp-d{width:22px;height:22px;border-radius:5px;border:1px solid rgba(0,0,0,.08)}
-.cp-n{font-size:9px;color:var(--text3)}
+.cp-d{width:20px;height:20px;border-radius:5px;border:1px solid rgba(0,0,0,.08)}
+.cp-n{font-size:8px;color:var(--text3)}
 .brow{display:flex;gap:8px;margin-top:8px}
-.brow .btn{flex:1;text-align:center}
+.brow .btn{flex:1;text-align:center;padding:9px}
 .brow .btn-dark{flex:2}
-
-/* TAG TREE EDITOR */
-.tree-editor{max-width:500px}
-.tree-editor h2{font-size:16px;font-weight:600;margin-bottom:1rem}
-.te-node{margin-bottom:4px}
-.te-row{display:flex;align-items:center;gap:6px;padding:4px 6px;border-radius:6px;background:var(--bg)}
-.te-name{flex:1;font-size:12px;color:var(--text)}
-.te-path{font-size:10px;color:var(--text3)}
-.te-btns{display:flex;gap:4px}
-.te-btn{font-size:10px;padding:2px 7px;border-radius:99px;border:1px solid var(--border);background:var(--surface);cursor:pointer;color:var(--text2);font-family:inherit}
-.te-btn:hover{background:var(--bg)}
-.te-btn.del{color:#cc2200;border-color:#fcc}
-.te-children{padding-left:16px;border-left:1px solid var(--border);margin-left:8px;margin-top:4px}
-.add-node-row{display:flex;gap:6px;padding:4px 6px;margin-top:4px}
-.add-node-row input{flex:1;font-size:12px;padding:4px 8px;border-radius:6px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-family:inherit}
-.add-node-row button{font-size:11px;padding:4px 10px;cursor:pointer}
-
-@keyframes spin{to{transform:rotate(360deg)}}
-.spin{width:12px;height:12px;border:2px solid rgba(26,86,219,.3);border-top-color:#1a56db;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;vertical-align:-2px;margin-right:4px}
 .img-sec{display:none}.img-sec.show{display:block}
 .url-sec{display:none}.url-sec.show{display:block}
+
+/* TAG AUTOCOMPLETE */
+.autocomplete-list{position:absolute;left:0;right:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:0 4px 16px rgba(0,0,0,.1);z-index:1000;max-height:160px;overflow-y:auto;display:none}
+.autocomplete-list.show{display:block}
+.ac-item{padding:7px 10px;font-size:12px;cursor:pointer;color:var(--text2);transition:background .1s}
+.ac-item:hover,.ac-item.focused{background:var(--bg);color:var(--text)}
+.ac-item mark{background:none;color:var(--accent);font-weight:600}
+
+@media(max-width:800px){
+  header{padding:0 1rem}
+  .logo{font-size:11px}
+  .btn{padding:6px 10px;font-size:11px}
+  .grid{grid-template-columns:repeat(2,1fr)!important;gap:8px}
+  .hbtns .view-toggle{display:none}
+  .creation-body{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
 
 <!-- SETUP -->
 <div id="setup">
-  <div class="setup-card">
-    <h1>NNIN LIBRARY</h1>
-    <p>처음 한 번만 설정하면 다음부터 자동으로 열려요.</p>
-    <div class="sf"><label>Supabase URL</label><input type="text" id="sb-url" value="https://wfbnzabvjpnruqypbjig.supabase.co"></div>
-    <div class="sf"><label>Supabase Key</label><input type="password" id="sb-key" placeholder="sb_publishable_..."></div>
-    <div class="opt-box">
-      <h3>✦ AI 자동 분석 (선택)</h3>
-      <p>이미지 업로드 시 태그·컬러·설명 자동 생성. 장당 약 4원.<br>나중에 추가해도 돼요.</p>
-      <div class="sf" style="margin-bottom:0"><label>Anthropic API Key</label><input type="password" id="ant-key" placeholder="sk-ant-... (없으면 비워두세요)"></div>
+  <div class="setup-wrap">
+    <div class="setup-logo">NNIN LIBRARY</div>
+    <div class="setup-card">
+      <h2>시작하기</h2>
+      <p>처음 한 번만 입력하면 다음부터 자동으로 로그인돼요.</p>
+      <div class="sf"><label>Supabase URL</label><input type="text" id="sb-url" value="https://wfbnzabvjpnruqypbjig.supabase.co"></div>
+      <div class="sf"><label>Supabase Key</label><input type="password" id="sb-key" placeholder="sb_publishable_..."></div>
+      <div class="opt-box">
+        <div class="opt-box-title">✦ AI 자동 분석 <span style="font-size:10px;color:var(--text3);font-weight:400">(선택, ~4원/장)</span></div>
+        <div class="opt-box-desc">이미지 업로드 시 태그·컬러·설명 자동 생성.</div>
+        <div class="sf" style="margin-bottom:0"><label>Anthropic API Key</label><input type="password" id="ant-key" placeholder="sk-ant-..."></div>
+      </div>
+      <div class="opt-box">
+        <div class="opt-box-title">✦ AI 이미지 생성 <span style="font-size:10px;color:var(--text3);font-weight:400">(선택)</span></div>
+        <div class="opt-box-desc">레퍼런스 참고해서 Gemini로 새 이미지 생성.</div>
+        <div class="sf" style="margin-bottom:0"><label>Gemini API Key</label><input type="password" id="gem-key" placeholder="AIza..."></div>
+      </div>
+      <button class="btn-start" onclick="startApp()">시작하기 →</button>
+      <p class="setup-note">키는 이 기기 브라우저에만 저장돼요.</p>
     </div>
-    <div class="opt-box">
-      <h3>✦ AI 이미지 생성 (선택)</h3>
-      <p>마인드맵에서 레퍼런스 선택 후 Gemini로 새 이미지 생성.<br>나중에 추가해도 돼요.</p>
-      <div class="sf" style="margin-bottom:0"><label>Gemini API Key</label><input type="password" id="gem-key" placeholder="AIza... (없으면 비워두세요)"></div>
-    </div>
-    <button class="btn-start" onclick="startApp()">시작하기 →</button>
-    <p class="setup-note">키는 이 기기에만 저장돼요. 외부로 전송되지 않아요.</p>
   </div>
 </div>
 
@@ -258,9 +358,9 @@ main{max-width:1200px;margin:0 auto;padding:1.25rem;display:grid;grid-template-c
     <div class="hbtns">
       <div class="view-toggle">
         <button class="vt active" id="vt-grid" onclick="setView('grid')">그리드</button>
+        <button class="vt" id="vt-canvas" onclick="setView('canvas')">캔버스</button>
         <button class="vt" id="vt-mind" onclick="setView('mind')">마인드맵</button>
       </div>
-      <button class="btn" onclick="openTagEditor()">태그 설정</button>
       <button class="btn btn-dark" onclick="openAdd()">+ 추가</button>
     </div>
   </header>
@@ -269,51 +369,200 @@ main{max-width:1200px;margin:0 auto;padding:1.25rem;display:grid;grid-template-c
     <aside class="sidebar">
       <div class="sb-card">
         <div class="search-wrap">
-          <span class="si">🔍</span>
+          <span class="si">⌕</span>
           <input type="text" id="search" placeholder="검색...">
         </div>
       </div>
-
       <div class="sb-card">
-        <h3>태그 <button onclick="clearAllFilters()">초기화</button></h3>
-        <div class="tree" id="tag-tree"></div>
+        <div class="sb-header" onclick="toggleSb('tags')">
+          <div class="sb-title">태그 <span class="sb-badge" id="tag-badge"></span></div>
+          <div class="sb-actions">
+            <button class="btn btn-sm" id="clr-tags" style="display:none" onclick="event.stopPropagation();clearTags()">초기화</button>
+            <span class="sb-chevron open" id="tags-chevron">▾</span>
+          </div>
+        </div>
+        <div class="sb-body" id="tags-body">
+          <div class="sb-inner" style="padding-bottom:.5rem">
+            <div class="tree" id="tag-tree"></div>
+            <div class="tree-add-row" style="margin-top:6px">
+              <input type="text" id="root-input" placeholder="대분류 추가..." onkeydown="if(event.key==='Enter')addRootNode()">
+              <button class="tree-add-btn" onclick="addRootNode()">+</button>
+            </div>
+          </div>
+        </div>
       </div>
-
       <div class="sb-card">
-        <h3>컬러 <button id="clr-colors" onclick="clearColors()" style="display:none">초기화</button></h3>
-        <div class="color-grid" id="color-grid"></div>
+        <div class="sb-header" onclick="toggleSb('colors')">
+          <div class="sb-title">컬러 <span class="sb-badge" id="color-badge"></span></div>
+          <div class="sb-actions">
+            <button class="btn btn-sm" id="clr-colors" style="display:none" onclick="event.stopPropagation();clearColors()">초기화</button>
+            <span class="sb-chevron open" id="colors-chevron">▾</span>
+          </div>
+        </div>
+        <div class="sb-body" id="colors-body">
+          <div class="sb-inner"><div class="color-grid" id="color-grid"></div></div>
+        </div>
       </div>
     </aside>
 
     <div class="content">
-      <div class="stats-row" id="stats"></div>
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <div class="stats-row" id="stats"></div>
+          <div class="col-controls" id="col-controls">
+            <button class="col-btn" data-col="2" onclick="setColumns(2)">2</button>
+            <button class="col-btn active" data-col="3" onclick="setColumns(3)">3</button>
+            <button class="col-btn" data-col="4" onclick="setColumns(4)">4</button>
+            <button class="col-btn" data-col="5" onclick="setColumns(5)">5</button>
+          </div>
+        </div>
+        <div class="zoom-controls" id="zoom-controls">
+          <button class="zoom-btn" onclick="zoomOut()">−</button>
+          <span class="zoom-val" id="zoom-val" onclick="resetZoom()">100%</span>
+          <button class="zoom-btn" onclick="zoomIn()">+</button>
+        </div>
+      </div>
       <div class="active-bar" id="abar"></div>
-      <div id="grid-view" class="grid"></div>
-      <div id="mind-view" class="mindmap-wrap">
+
+      <!-- GRID -->
+      <div id="grid-view">
+        <div class="grid-scaler" id="grid-scaler">
+          <div class="grid" id="grid" style="grid-template-columns:repeat(3,1fr)"></div>
+        </div>
+        <div class="gen-toggle-row" id="gen-toggle-row">
+          <button class="btn btn-sm" onclick="toggleGenPanel('grid')">✦ AI 이미지 생성</button>
+        </div>
+        <div class="gen-panel" id="gen-panel-grid" style="display:none">
+          <div class="gen-panel-title">✦ AI 이미지 생성</div>
+          <div class="gen-panel-desc">카드를 클릭해서 레퍼런스 선택 → 추가 이미지나 설명 추가 → Gemini로 생성</div>
+          <div class="gen-refs" id="gen-refs-grid"><span style="font-size:11px;color:var(--text3)">카드를 클릭해 선택</span></div>
+          <div class="gen-extra">
+            <div class="gen-extra-label">추가 이미지 (선택)</div>
+            <div class="gen-extra-imgs" id="gen-extra-imgs-grid">
+              <div class="gen-extra-add" onclick="document.getElementById('gei-grid').click()">+</div>
+              <input type="file" id="gei-grid" accept="image/*" style="display:none" onchange="addExtraImg(this,'grid')">
+            </div>
+          </div>
+          <div class="gen-row">
+            <input type="text" id="gen-prompt-grid" placeholder="추가 설명 (예: 재킷에 적용, 프로모 이미지...)">
+            <button class="btn btn-dark" onclick="generateImage('grid')">생성</button>
+          </div>
+          <div class="status" id="gen-status-grid"></div>
+          <div class="gen-res" id="gen-res-grid">
+            <img id="gen-img-grid" src="" alt="">
+            <button class="btn" style="width:100%;margin-top:8px;font-size:12px" onclick="saveGenerated('grid')">라이브러리에 저장</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CANVAS -->
+      <div id="canvas-view">
+        <div class="canvas-bg"></div>
+        <div class="canvas-inner" id="canvas-inner"></div>
+        <div class="canvas-empty" id="canvas-empty">
+          <span style="font-size:28px;opacity:.2">✦</span>
+          <span>아이템이 없거나 필터 조건에 맞는 아이템이 없어요</span>
+        </div>
+        <div class="canvas-hint">드래그로 이동 · 트랙패드/휠로 줌 · 두 손가락 핀치</div>
+      </div>
+
+      <!-- MINDMAP -->
+      <div id="mind-view">
         <div class="mm-top">
-          <input type="text" id="mm-input" placeholder="중심 키워드 입력 (예: navy, halftone, graphic print...)">
+          <input type="text" id="mm-input" placeholder="중심 키워드 (예: navy, halftone, graphic print...)">
           <button class="btn" onclick="buildMindmap()">맵 생성</button>
         </div>
         <div class="mm-canvas" id="mm-canvas">
           <svg class="mm-svg" id="mm-svg"></svg>
           <div class="mm-empty" id="mm-empty">
-            <span style="font-size:32px">✦</span>
+            <span style="font-size:28px;opacity:.2">✦</span>
             <span>키워드를 입력하고 맵 생성을 눌러보세요</span>
-            <span style="font-size:11px;color:var(--text3)">예: navy · halftone · graphic print</span>
           </div>
         </div>
-        <div class="gen-panel" id="gen-panel">
-          <h4>✦ AI 이미지 생성</h4>
-          <p>마인드맵에서 레퍼런스를 클릭해 선택하면 프롬프트가 자동으로 만들어져요.</p>
-          <div class="gen-sel" id="gen-sel"><span style="font-size:10px;color:var(--text3)">레퍼런스를 선택해주세요</span></div>
-          <div class="gen-row">
-            <input type="text" id="gen-prompt" placeholder="추가 설명 (예: 재킷에 적용, 프로모 이미지 느낌으로...)">
-            <button class="btn btn-dark" onclick="generateImage()">생성</button>
+        <div class="gen-panel" style="margin:1rem;margin-top:0">
+          <div class="gen-panel-title">✦ AI 이미지 생성</div>
+          <div class="gen-refs" id="gen-refs-mind"><span style="font-size:11px;color:var(--text3)">노드를 클릭해 선택</span></div>
+          <div class="gen-extra">
+            <div class="gen-extra-label">추가 이미지 (선택)</div>
+            <div class="gen-extra-imgs" id="gen-extra-imgs-mind">
+              <div class="gen-extra-add" onclick="document.getElementById('gei-mind').click()">+</div>
+              <input type="file" id="gei-mind" accept="image/*" style="display:none" onchange="addExtraImg(this,'mind')">
+            </div>
           </div>
-          <div class="status" id="gen-status"></div>
-          <div class="gen-res" id="gen-res">
-            <img id="gen-img" src="" alt="생성된 이미지">
-            <button class="btn" style="width:100%;margin-top:8px;font-size:12px" onclick="saveGenerated()">라이브러리에 저장</button>
+          <div class="gen-row">
+            <input type="text" id="gen-prompt-mind" placeholder="추가 설명...">
+            <button class="btn btn-dark" onclick="generateImage('mind')">생성</button>
+          </div>
+          <div class="status" id="gen-status-mind"></div>
+          <div class="gen-res" id="gen-res-mind">
+            <img id="gen-img-mind" src="" alt="">
+            <button class="btn" style="width:100%;margin-top:8px;font-size:12px" onclick="saveGenerated('mind')">라이브러리에 저장</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CREATION MODE -->
+      <div id="creation-view">
+        <div class="creation-header">
+          <div>
+            <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px">창작 모드</div>
+            <div class="creation-title" id="creation-title">레퍼런스 선택 중...</div>
+          </div>
+          <button class="btn" onclick="exitCreation()">← 돌아가기</button>
+        </div>
+        <div class="creation-body">
+          <div class="creation-main" id="creation-main">
+            <img class="creation-main-img" id="creation-main-img" src="" alt="" style="display:none">
+            <div class="creation-main-info">
+              <div style="font-size:15px;font-weight:600;margin-bottom:6px" id="cm-title"></div>
+              <div style="font-size:11px;color:var(--text3);margin-bottom:10px" id="cm-src"></div>
+              <div class="slabel">Notes</div>
+              <div style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:10px" id="cm-desc"></div>
+              <div class="slabel">태그</div>
+              <div style="display:flex;flex-wrap:wrap;gap:5px" id="cm-tags"></div>
+              <div class="slabel" style="margin-top:12px">컬러</div>
+              <div style="display:flex;flex-wrap:wrap;gap:6px" id="cm-colors"></div>
+            </div>
+          </div>
+          <div class="creation-similar">
+            <div class="creation-similar-header">
+              <span>유사 레퍼런스</span>
+              <span style="font-size:11px;color:var(--text3)" id="sim-count"></span>
+            </div>
+            <div class="creation-similar-grid" id="sim-grid"></div>
+          </div>
+        </div>
+        <div class="creation-workspace">
+          <div class="workspace-title">
+            작업 보드
+            <span style="font-size:11px;color:var(--text3);font-weight:400">선택한 레퍼런스들을 여기서 한눈에 확인하며 작업해요</span>
+          </div>
+          <div class="workspace-board" id="workspace-board">
+            <div class="ws-add-btn" onclick="addFromLibrary()">+</div>
+          </div>
+        </div>
+        <div class="creation-actions">
+          <button class="btn" onclick="openCreationGen()">✦ AI 이미지 생성</button>
+          <button class="btn" onclick="copyWorkspacePrompt()">📋 프롬프트 복사</button>
+        </div>
+        <div class="gen-panel" id="gen-panel-creation" style="display:none">
+          <div class="gen-panel-title">✦ AI 이미지 생성</div>
+          <div class="gen-refs" id="gen-refs-creation"></div>
+          <div class="gen-extra">
+            <div class="gen-extra-label">추가 이미지 (선택)</div>
+            <div class="gen-extra-imgs" id="gen-extra-imgs-creation">
+              <div class="gen-extra-add" onclick="document.getElementById('gei-creation').click()">+</div>
+              <input type="file" id="gei-creation" accept="image/*" style="display:none" onchange="addExtraImg(this,'creation')">
+            </div>
+          </div>
+          <div class="gen-row">
+            <input type="text" id="gen-prompt-creation" placeholder="추가 설명...">
+            <button class="btn btn-dark" onclick="generateImage('creation')">생성</button>
+          </div>
+          <div class="status" id="gen-status-creation"></div>
+          <div class="gen-res" id="gen-res-creation">
+            <img id="gen-img-creation" src="" alt="">
+            <button class="btn" style="width:100%;margin-top:8px;font-size:12px" onclick="saveGenerated('creation')">라이브러리에 저장</button>
           </div>
         </div>
       </div>
@@ -323,14 +572,10 @@ main{max-width:1200px;margin:0 auto;padding:1.25rem;display:grid;grid-template-c
 
 <!-- DETAIL MODAL -->
 <div class="overlay" id="detail-ov" onclick="ovClose(event,'detail-ov')">
-  <div class="modal">
-    <div class="handle"></div>
-    <button class="mc" onclick="closeDetail()">✕</button>
-    <div id="detail-content"></div>
-  </div>
+  <div class="modal"><div class="handle"></div><button class="mc" onclick="closeDetail()">✕</button><div id="detail-content"></div></div>
 </div>
 
-<!-- ADD/EDIT MODAL -->
+<!-- ADD MODAL -->
 <div class="overlay" id="add-ov" onclick="ovClose(event,'add-ov')">
   <div class="modal add-modal">
     <div class="handle"></div>
@@ -342,18 +587,14 @@ main{max-width:1200px;margin:0 auto;padding:1.25rem;display:grid;grid-template-c
     </div>
     <div class="img-sec show" id="img-sec">
       <div class="drop-zone" id="drop-zone" onclick="document.getElementById('fin').click()" ondragover="event.preventDefault()" ondrop="handleDrop(event)">
-        <div style="font-size:24px;margin-bottom:6px">📷</div>
+        <div style="font-size:22px;margin-bottom:5px">📷</div>
         이미지를 드래그하거나 탭해서 업로드
         <div id="drop-prev"></div>
       </div>
       <input type="file" id="fin" accept="image/*" style="display:none" onchange="handleFile(this.files[0])">
       <div class="ai-choice" id="ai-choice">
-        <button class="acb" onclick="skipAI()">
-          <span class="aci">✍️</span><span class="act">직접 입력</span><span class="acs">무료</span>
-        </button>
-        <button class="acb" id="ai-btn" onclick="runAI()">
-          <span class="aci">✦</span><span class="act">AI 자동 분석</span><span class="acs">~4원</span>
-        </button>
+        <button class="acb" onclick="skipAI()"><span class="aci">✍️</span><span class="act">직접 입력</span><span class="acs">무료</span></button>
+        <button class="acb" id="ai-btn" onclick="runAI()"><span class="aci">✦</span><span class="act">AI 자동 분석</span><span class="acs">~4원</span></button>
       </div>
     </div>
     <div class="url-sec" id="url-sec">
@@ -368,21 +609,22 @@ main{max-width:1200px;margin:0 auto;padding:1.25rem;display:grid;grid-template-c
     <div class="ff" id="ff">
       <div class="field"><label>제목 *</label><input type="text" id="f-title"></div>
       <div class="frow">
-        <div class="field"><label>출처</label><input type="text" id="f-source" placeholder="instagram, pinterest..."></div>
+        <div class="field"><label>출처</label><input type="text" id="f-source" placeholder="instagram..."></div>
         <div class="field"><label>URL</label><input type="text" id="f-url" placeholder="https://..."></div>
       </div>
-      <div class="field">
+      <div class="field" style="position:relative">
         <label>태그 <span style="text-transform:none;letter-spacing:0;font-weight:400">(쉼표 구분)</span></label>
-        <input type="text" id="f-tags" placeholder="halftone, graphic print, CDG HOMME...">
-        <div class="hint">태그 설정에서 만든 트리 구조로 자동 연결돼요</div>
+        <input type="text" id="f-tags" placeholder="halftone, graphic print..." autocomplete="off" oninput="onTagInput(this)" onkeydown="onTagKeydown(event,this)">
+        <div class="autocomplete-list" id="tag-ac"></div>
+        <div class="hint">기존 태그는 자동완성으로 추천돼요</div>
       </div>
-      <div class="field"><label>Notes</label><textarea id="f-desc" placeholder="이 레퍼런스에 대한 메모, 인사이트..."></textarea></div>
+      <div class="field"><label>Notes</label><textarea id="f-desc"></textarea></div>
       <div class="field">
-        <label>컬러 hex <span style="text-transform:none;letter-spacing:0;font-weight:400">(쉼표 구분)</span></label>
-        <input type="text" id="f-colors" placeholder="#1B2A4A, #D92B2B, #FFFFFF" oninput="previewColors()">
+        <label>컬러 <span style="text-transform:none;letter-spacing:0;font-weight:400">(쉼표 구분, 이름으로)</span></label>
+        <input type="text" id="f-colors" placeholder="white, navy, red" oninput="previewColors()">
         <div class="cprev" id="cprev"></div>
+        <div class="hint">예: navy, light blue, off-white, rust</div>
       </div>
-      <div class="field"><label>컬러 이름</label><input type="text" id="f-cnames" placeholder="navy, red, white"></div>
       <div class="brow">
         <button class="btn" onclick="closeAdd()">취소</button>
         <button class="btn btn-dark" id="save-btn" onclick="saveItem()">저장하기</button>
@@ -391,30 +633,27 @@ main{max-width:1200px;margin:0 auto;padding:1.25rem;display:grid;grid-template-c
   </div>
 </div>
 
-<!-- TAG EDITOR MODAL -->
-<div class="overlay" id="te-ov" onclick="ovClose(event,'te-ov')">
-  <div class="modal tree-editor">
-    <div class="handle"></div>
-    <button class="mc" onclick="document.getElementById('te-ov').classList.remove('open')">✕</button>
-    <h2>태그 구조 설정</h2>
-    <p style="font-size:12px;color:var(--text3);margin-bottom:1rem;line-height:1.5">깊이 제한 없이 원하는 만큼 계층을 추가할 수 있어요. 부모를 선택하면 하위 태그가 모두 포함돼요.</p>
-    <div id="te-tree"></div>
-    <div class="add-node-row" style="padding-left:0">
-      <input type="text" id="te-root-input" placeholder="새 대분류 추가 (예: Brand, Technique, Category)">
-      <button class="btn btn-dark" onclick="addRootNode()">추가</button>
-    </div>
-  </div>
-</div>
-
 <script>
-const STORAGE_KEYS = 'nnin_keys_v3';
-const STORAGE_TREE = 'nnin_tree_v1';
-let SB_URL='', SB_KEY='', ANT_KEY='', GEM_KEY='';
-let items=[], tagTree=[], activeTags=new Set(), activeColors=new Set(), searchQ='';
-let pendingImg=null, selFetched=[], editingId=null, currentTab='img', currentView='grid';
-let selForGen=new Set(), generatedImg=null;
+const STORAGE_KEYS='nnin_keys_v5';
+const STORAGE_TREE='nnin_tree_v3';
+const STORAGE_CANVAS='nnin_canvas_v1';
+let SB_URL='',SB_KEY='',ANT_KEY='',GEM_KEY='';
+let items=[],tagTree=[],activeTags=new Set(),activeColors=new Set(),searchQ='';
+let pendingImg=null,selFetched=[],editingId=null,currentTab='img',currentView='grid';
+let selForGen=new Set(),selMode=false;
+let extraImgs={grid:[],mind:[],creation:[]};
+let generatedImgs={grid:null,mind:null,creation:null};
+let gridCols=3,gridZoom=1;
+let canvasTransX=0,canvasTransY=0,canvasScale=1;
+let canvasIsPanning=false,canvasPanStart={x:0,y:0};
+let canvasPositions={};
+let creationItemId=null,workspaceIds=[];
+let acFocusIdx=-1;
 
-const DEFAULT_TREE = [
+const COLOR_MAP={'white':'#fff','off-white':'#f5f5f0','cream':'#fdf6e3','ivory':'#fffff0','black':'#111','charcoal':'#36454f','dark gray':'#555','gray':'#9ca3af','grey':'#9ca3af','light gray':'#d1d5db','silver':'#c0c0c0','navy':'#1b2a4a','dark blue':'#1e3a5f','blue':'#3b82f6','light blue':'#93c5fd','sky blue':'#87ceeb','cobalt':'#0047ab','royal blue':'#4169e1','baby blue':'#89cff0','red':'#dc2626','crimson':'#dc143c','scarlet':'#ff2400','burgundy':'#800020','green':'#16a34a','olive':'#808000','forest green':'#228b22','mint':'#98ff98','sage':'#bcb88a','emerald':'#50c878','yellow':'#eab308','mustard':'#e3a008','lemon':'#fff44f','gold':'#ffd700','orange':'#f97316','rust':'#b7410e','burnt orange':'#cc5500','amber':'#ffbf00','pink':'#ec4899','hot pink':'#ff69b4','blush':'#de5d83','dusty pink':'#d4a0a0','rose':'#ff007f','purple':'#9333ea','violet':'#8b5cf6','lavender':'#e6e6fa','plum':'#dda0dd','lilac':'#c8a2c8','brown':'#92400e','tan':'#d2b48c','camel':'#c19a6b','beige':'#f5f5dc','khaki':'#c3b091','sand':'#f4d03f'};
+const COLOR_SYNONYMS={'navy':['navy','dark blue','navy blue'],'blue':['blue','light blue','sky blue','cobalt','royal blue','baby blue','powder blue','cerulean'],'red':['red','crimson','scarlet','cherry'],'white':['white','off-white','cream','ivory'],'black':['black','jet black','charcoal','near black'],'gray':['gray','grey','light gray','dark gray','silver'],'green':['green','olive','forest green','mint','sage','emerald'],'yellow':['yellow','mustard','lemon','gold'],'orange':['orange','burnt orange','rust','amber'],'pink':['pink','hot pink','blush','dusty pink','rose'],'purple':['purple','violet','lavender','plum','lilac'],'brown':['brown','tan','camel','khaki','beige','sand']};
+
+const DEFAULT_TREE=[
   {id:'t1',name:'Brand',children:[{id:'t1a',name:'Comme des Garçons',children:[{id:'t1a1',name:'CDG',children:[]},{id:'t1a2',name:'CDG HOMME',children:[{id:'t1a2a',name:'CDG HOMME PLUS',children:[]}]},{id:'t1a3',name:'Junya Watanabe',children:[]}]},{id:'t1b',name:'Supreme',children:[]},{id:'t1c',name:'PUNKANDYO',children:[]},{id:'t1d',name:'henry_jawnson',children:[]}]},
   {id:'t2',name:'Technique',children:[{id:'t2a',name:'Silkscreen',children:[{id:'t2a1',name:'Halftone',children:[]},{id:'t2a2',name:'Spot color',children:[]},{id:'t2a3',name:'Discharge',children:[]}]},{id:'t2b',name:'DTP',children:[{id:'t2b1',name:'Halftone',children:[]},{id:'t2b2',name:'All-over print',children:[]},{id:'t2b3',name:'Photographic print',children:[]}]},{id:'t2c',name:'DTG',children:[]},{id:'t2d',name:'나염',children:[]},{id:'t2e',name:'전사',children:[]},{id:'t2f',name:'Embroidery',children:[]}]},
   {id:'t3',name:'Category',children:[{id:'t3a',name:'Tops',children:[{id:'t3a1',name:'Graphic tee',children:[]},{id:'t3a2',name:'Long sleeve',children:[]},{id:'t3a3',name:'Polo',children:[]}]},{id:'t3b',name:'Outerwear',children:[{id:'t3b1',name:'Bomber jacket',children:[]},{id:'t3b2',name:'Coach jacket',children:[]},{id:'t3b3',name:'Hoodie',children:[]}]},{id:'t3c',name:'Bottoms',children:[]},{id:'t3d',name:'Accessories',children:[]}]},
@@ -422,12 +661,21 @@ const DEFAULT_TREE = [
   {id:'t5',name:'Color Story',children:[{id:'t5a',name:'Monochrome',children:[]},{id:'t5b',name:'High contrast',children:[]},{id:'t5c',name:'Tonal',children:[]}]}
 ];
 
-function normalize(s){ return (s||'').toLowerCase().replace(/[\s\-_]+/g,''); }
+function normalize(s){return(s||'').toLowerCase().replace(/[\s\-_]+/g,'')}
+function getColorHex(name){return COLOR_MAP[(name||'').toLowerCase().trim()]||'#ddd'}
+
+function colorMatches(fc,itemColors){
+  const fcl=fc.toLowerCase().trim();
+  const group=Object.entries(COLOR_SYNONYMS).find(([k,v])=>v.some(s=>s===fcl)||k===fcl);
+  if(!group)return(itemColors||[]).some(c=>normalize(c).includes(normalize(fc)));
+  return(itemColors||[]).some(c=>{const cl=c.toLowerCase().trim();return group[1].some(s=>cl.includes(s)||s.includes(cl))});
+}
 
 window.addEventListener('load',()=>{
   const saved=JSON.parse(localStorage.getItem(STORAGE_KEYS)||'{}');
-  if(saved.sbUrl&&saved.sbKey){ SB_URL=saved.sbUrl;SB_KEY=saved.sbKey;ANT_KEY=saved.antKey||'';GEM_KEY=saved.gemKey||'';showApp(); }
+  if(saved.sbUrl&&saved.sbKey){SB_URL=saved.sbUrl;SB_KEY=saved.sbKey;ANT_KEY=saved.antKey||'';GEM_KEY=saved.gemKey||'';showApp()}
   tagTree=JSON.parse(localStorage.getItem(STORAGE_TREE)||'null')||DEFAULT_TREE;
+  canvasPositions=JSON.parse(localStorage.getItem(STORAGE_CANVAS)||'{}');
 });
 
 function startApp(){
@@ -442,667 +690,568 @@ function startApp(){
   showApp();
 }
 
-function showApp(){
-  document.getElementById('setup').style.display='none';
-  document.getElementById('app').style.display='block';
-  loadItems();
-}
+function showApp(){document.getElementById('setup').style.display='none';document.getElementById('app').style.display='block';loadItems()}
 
 async function sbFetch(path,opts={}){
   const res=await fetch(SB_URL+'/rest/v1/'+path,{...opts,headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':opts.prefer||'return=representation',...(opts.headers||{})}});
   if(!res.ok){const e=await res.text();throw new Error(e)}
   return res.status===204?null:res.json();
 }
-
-async function loadItems(){
-  try{ items=await sbFetch('archive_items?order=created_at.desc')||[]; render(); }
-  catch(e){ alert('데이터 불러오기 실패: '+e.message); }
+async function loadItems(){try{items=await sbFetch('archive_items?order=created_at.desc')||[];render()}catch(e){alert('데이터 불러오기 실패: '+e.message)}}
+async function insertItem(d){return sbFetch('archive_items',{method:'POST',prefer:'return=representation',body:JSON.stringify(d)})}
+async function updateItem(id,d){return sbFetch('archive_items?id=eq.'+id,{method:'PATCH',prefer:'return=representation',body:JSON.stringify(d)})}
+async function deleteItemDB(id){return sbFetch('archive_items?id=eq.'+id,{method:'DELETE',prefer:'return=minimal'})}
+async function renameTagGlobally(oldName,newName){
+  const affected=items.filter(it=>(it.tags||[]).includes(oldName));
+  for(const it of affected){const newTags=(it.tags||[]).map(t=>t===oldName?newName:t);await updateItem(it.id,{tags:newTags});it.tags=newTags}
 }
 
-async function insertItem(d){ return sbFetch('archive_items',{method:'POST',prefer:'return=representation',body:JSON.stringify(d)}); }
-async function updateItem(id,d){ return sbFetch('archive_items?id=eq.'+id,{method:'PATCH',prefer:'return=representation',body:JSON.stringify(d)}); }
-async function deleteItemDB(id){ return sbFetch('archive_items?id=eq.'+id,{method:'DELETE',prefer:'return=minimal'}); }
+function getAllDescendantNames(node){let n=[];(node.children||[]).forEach(c=>{n.push(c.name);n=n.concat(getAllDescendantNames(c))});return n}
+function findNode(tree,name){for(const n of tree){if(normalize(n.name)===normalize(name))return n;const f=findNode(n.children||[],name);if(f)return f}return null}
+function findNodeById(tree,id){for(const n of tree){if(n.id===id)return n;const f=findNodeById(n.children||[],id);if(f)return f}return null}
+function getAncestors(tree,name,path=[]){for(const n of tree){if(normalize(n.name)===normalize(name))return path;const f=getAncestors(n.children||[],name,[...path,n]);if(f)return f}return null}
+function deleteNodeFromTree(tree,id){for(let i=0;i<tree.length;i++){if(tree[i].id===id){tree.splice(i,1);return true}if(deleteNodeFromTree(tree[i].children||[],id))return true}return false}
+function saveTagTree(){localStorage.setItem(STORAGE_TREE,JSON.stringify(tagTree));render()}
 
-function getAllTagNames(node){ let names=[node.name];(node.children||[]).forEach(c=>names=names.concat(getAllTagNames(c)));return names; }
-function getAllDescendantNames(node){ let names=[];(node.children||[]).forEach(c=>{names.push(c.name);names=names.concat(getAllDescendantNames(c))});return names; }
-function findNode(tree,name){ for(const n of tree){ if(normalize(n.name)===normalize(name))return n; const f=findNode(n.children||[],name); if(f)return f; } return null; }
-function getAncestors(tree,name,path=[]){ for(const n of tree){ if(normalize(n.name)===normalize(name))return path; const f=getAncestors(n.children||[],name,[...path,n]); if(f)return f; } return null; }
-
-function allColorsMap(){ const m={}; items.forEach(it=>(it.colors||[]).forEach((c,i)=>{if(!m[c])m[c]=(it.color_names||[])[i]||c;})); return m; }
+function getAllTagsFlat(){const s=new Set();items.forEach(it=>(it.tags||[]).forEach(t=>s.add(t)));tagTree.forEach(n=>{[n.name,...getAllDescendantNames(n)].forEach(t=>s.add(t))});return[...s].sort()}
+function allColorsFlat(){const s=new Set();items.forEach(it=>(it.colors||[]).forEach(c=>s.add(c)));return[...s].sort()}
 
 function matchesItem(it){
   if(activeTags.size>0){
     const tagSet=new Set((it.tags||[]).map(t=>normalize(t)));
     for(const ft of activeTags){
       const node=findNode(tagTree,ft);
-      if(node){
-        const allNames=[node.name,...getAllDescendantNames(node)].map(n=>normalize(n));
-        if(!allNames.some(n=>tagSet.has(n)))return false;
-      } else {
-        if(!tagSet.has(normalize(ft)))return false;
-      }
+      if(node){const allN=[node.name,...getAllDescendantNames(node)].map(n=>normalize(n));if(!allN.some(n=>tagSet.has(n)))return false}
+      else{if(!tagSet.has(normalize(ft)))return false}
     }
   }
-  if(activeColors.size>0&&![...activeColors].every(c=>(it.colors||[]).includes(c)))return false;
-  if(searchQ){
-    const q=normalize(searchQ);
-    const hay=[it.title,it.source,it.description,...(it.tags||[]),...(it.color_names||[])].map(s=>normalize(s||'')).join(' ');
-    if(!hay.includes(q))return false;
-  }
+  if(activeColors.size>0&&![...activeColors].every(fc=>colorMatches(fc,it.colors||[])))return false;
+  if(searchQ){const q=normalize(searchQ);const h=[it.title,it.source,it.description,...(it.tags||[]),...(it.colors||[])].map(s=>normalize(s||'')).join(' ');if(!h.includes(q))return false}
   return true;
 }
 
-function clearAllFilters(){ activeTags.clear();activeColors.clear();render(); }
-function clearColors(){ activeColors.clear();render(); }
+function clearTags(){activeTags.clear();render()}
+function clearColors(){activeColors.clear();render()}
+
+function toggleSb(id){
+  const body=document.getElementById(id+'-body');
+  const chev=document.getElementById(id+'-chevron');
+  body.classList.toggle('collapsed');
+  chev.classList.toggle('open',body.classList.contains('collapsed')?false:true);
+}
 
 function setView(v){
   currentView=v;
+  ['grid','canvas','mind','creation'].forEach(id=>{
+    const el=document.getElementById(id+'-view');
+    if(el)el.style.display='none';
+    if(id==='mind'){const mel=document.getElementById('mind-view');if(mel)mel.className=''}
+  });
   document.getElementById('vt-grid').className='vt'+(v==='grid'?' active':'');
+  document.getElementById('vt-canvas').className='vt'+(v==='canvas'?' active':'');
   document.getElementById('vt-mind').className='vt'+(v==='mind'?' active':'');
-  document.getElementById('grid-view').style.display=v==='grid'?'grid':'none';
-  document.getElementById('mind-view').className='mindmap-wrap'+(v==='mind'?' show':'');
-  document.getElementById('gen-panel').className='gen-panel'+(v==='mind'?' show':'');
-  if(v==='mind')buildMindmap();
+  document.getElementById('col-controls').style.display=v==='grid'?'flex':'none';
+  if(v==='grid'){document.getElementById('grid-view').style.display='block'}
+  else if(v==='canvas'){document.getElementById('canvas-view').style.display='block';renderCanvas()}
+  else if(v==='mind'){document.getElementById('mind-view').style.display='block';document.getElementById('mind-view').className='show'}
+  else if(v==='creation'){document.getElementById('creation-view').style.display='block'}
 }
 
+// ── ZOOM & COLUMNS ──
+function setColumns(n){
+  gridCols=n;
+  document.querySelectorAll('.col-btn').forEach(b=>b.classList.toggle('active',parseInt(b.dataset.col)===n));
+  document.getElementById('grid').style.gridTemplateColumns=`repeat(${n},1fr)`;
+}
+function zoomIn(){setZoom(Math.min(gridZoom+0.1,2))}
+function zoomOut(){setZoom(Math.max(gridZoom-0.1,0.3))}
+function resetZoom(){setZoom(1)}
+function setZoom(z){
+  gridZoom=z;
+  document.getElementById('zoom-val').textContent=Math.round(z*100)+'%';
+  if(currentView==='grid'){document.getElementById('grid-scaler').style.transform=`scale(${z})`}
+  else if(currentView==='canvas'){canvasScale=z;applyCanvasTransform()}
+}
+
+// wheel zoom
+document.addEventListener('wheel',e=>{
+  if(currentView==='grid'&&e.ctrlKey){e.preventDefault();setZoom(Math.min(Math.max(gridZoom-(e.deltaY>0?0.1:-0.1),0.3),2))}
+  else if(currentView==='canvas'&&!e.ctrlKey){
+    // pan
+  } else if(currentView==='canvas'&&e.ctrlKey){e.preventDefault();canvasScale=Math.min(Math.max(canvasScale-(e.deltaY>0?0.1:-0.1),0.2),3);applyCanvasTransform();document.getElementById('zoom-val').textContent=Math.round(canvasScale*100)+'%'}
+},{passive:false});
+
+// touch pinch
+let lastTouchDist=null;
+document.addEventListener('touchstart',e=>{if(e.touches.length===2)lastTouchDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY)});
+document.addEventListener('touchmove',e=>{
+  if(e.touches.length===2){
+    e.preventDefault();
+    const dist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+    if(lastTouchDist){const delta=(dist-lastTouchDist)/200;if(currentView==='grid')setZoom(Math.min(Math.max(gridZoom+delta,0.3),2));else if(currentView==='canvas'){canvasScale=Math.min(Math.max(canvasScale+delta,0.2),3);applyCanvasTransform();document.getElementById('zoom-val').textContent=Math.round(canvasScale*100)+'%'}}
+    lastTouchDist=dist;
+  }
+},{passive:false});
+
+// ── CANVAS ──
+function applyCanvasTransform(){document.getElementById('canvas-inner').style.transform=`translate(${canvasTransX}px,${canvasTransY}px) scale(${canvasScale})`}
+
+const canvasEl=document.getElementById('canvas-view');
+canvasEl.addEventListener('mousedown',e=>{if(e.target===canvasEl||e.target.classList.contains('canvas-bg')||e.target.classList.contains('canvas-inner')){canvasIsPanning=true;canvasPanStart={x:e.clientX-canvasTransX,y:e.clientY-canvasTransY};canvasEl.classList.add('grabbing')}});
+canvasEl.addEventListener('mousemove',e=>{if(canvasIsPanning){canvasTransX=e.clientX-canvasPanStart.x;canvasTransY=e.clientY-canvasPanStart.y;applyCanvasTransform()}});
+canvasEl.addEventListener('mouseup',()=>{canvasIsPanning=false;canvasEl.classList.remove('grabbing')});
+canvasEl.addEventListener('mouseleave',()=>{canvasIsPanning=false;canvasEl.classList.remove('grabbing')});
+canvasEl.addEventListener('wheel',e=>{
+  if(!e.ctrlKey){e.preventDefault();canvasTransX-=e.deltaX;canvasTransY-=e.deltaY;applyCanvasTransform()}
+},{passive:false});
+
+function renderCanvas(){
+  const inner=document.getElementById('canvas-inner');inner.innerHTML='';
+  const vis=items.filter(matchesItem);
+  document.getElementById('canvas-empty').style.display=vis.length?'none':'flex';
+  const cols=Math.ceil(Math.sqrt(vis.length));
+  vis.forEach((it,i)=>{
+    const pos=canvasPositions[it.id]||{x:(i%cols)*200+20,y:Math.floor(i/cols)*220+20};
+    const card=document.createElement('div');card.className='canvas-card';
+    card.style.left=pos.x+'px';card.style.top=pos.y+'px';
+    const thumb=it.thumbnail?`<img src="${it.thumbnail}" alt="${it.title}" loading="lazy" style="width:100%;height:110px;object-fit:cover;display:block">`:'<div style="width:100%;height:110px;background:var(--surface2);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:20px">✦</div>';
+    const tags=(it.tags||[]).slice(0,2).map(t=>`<span style="font-size:9px;padding:1px 5px;border-radius:99px;background:var(--bg);color:var(--text2);border:1px solid var(--border)">${t}</span>`).join('');
+    card.innerHTML=`${thumb}<div style="padding:8px 10px"><div style="font-size:11px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px">${it.title}</div><div style="display:flex;flex-wrap:wrap;gap:3px">${tags}</div></div>`;
+    let isDragging=false,dragStart={x:0,y:0},cardStart={x:0,y:0};
+    card.addEventListener('mousedown',e=>{e.stopPropagation();isDragging=true;dragStart={x:e.clientX,y:e.clientY};cardStart={...pos};card.classList.add('dragging')});
+    document.addEventListener('mousemove',e=>{if(!isDragging)return;const dx=(e.clientX-dragStart.x)/canvasScale;const dy=(e.clientY-dragStart.y)/canvasScale;pos.x=cardStart.x+dx;pos.y=cardStart.y+dy;card.style.left=pos.x+'px';card.style.top=pos.y+'px'});
+    document.addEventListener('mouseup',e=>{
+      if(!isDragging)return;
+      isDragging=false;card.classList.remove('dragging');
+      const moved=Math.abs(e.clientX-dragStart.x)+Math.abs(e.clientY-dragStart.y)>5;
+      canvasPositions[it.id]={x:pos.x,y:pos.y};
+      localStorage.setItem(STORAGE_CANVAS,JSON.stringify(canvasPositions));
+      if(!moved)openDetail(it.id);
+    });
+    inner.appendChild(card);
+  });
+}
+
+// ── TREE ──
 function countMatches(node){
-  const allNames=[node.name,...getAllDescendantNames(node)].map(n=>normalize(n));
-  return items.filter(it=>{
-    const tagSet=new Set((it.tags||[]).map(t=>normalize(t)));
-    return allNames.some(n=>tagSet.has(n));
-  }).length;
+  const allN=[node.name,...getAllDescendantNames(node)].map(n=>normalize(n));
+  return items.filter(it=>{const ts=new Set((it.tags||[]).map(t=>normalize(t)));return allN.some(n=>ts.has(n))}).length;
 }
 
-function renderTreeNode(node,depth=0){
+function renderTreeNode(node){
   const hasChildren=(node.children||[]).length>0;
   const isActive=activeTags.has(node.name);
   const cnt=countMatches(node);
-  const stateKey='tree_open_'+node.id;
+  const stateKey='topen_'+node.id;
   const isOpen=sessionStorage.getItem(stateKey)!=='0';
-
-  const row=document.createElement('div');
-  row.className='tree-row'+(isActive?' active':'');
-  row.innerHTML=`
-    <span class="tree-toggle">${hasChildren?(isOpen?'▾':'▸'):''}</span>
-    <span class="tree-label">${node.name}</span>
-    <span class="tree-count">${cnt}</span>`;
-  row.onclick=(e)=>{
-    e.stopPropagation();
-    if(isActive){activeTags.delete(node.name)}else{activeTags.add(node.name)}
-    render();
-  };
-  if(hasChildren){
-    row.querySelector('.tree-toggle').onclick=(e)=>{
-      e.stopPropagation();
-      const cur=sessionStorage.getItem(stateKey)!=='0';
-      sessionStorage.setItem(stateKey,cur?'0':'1');
-      render();
-    };
-  }
-
-  const wrap=document.createElement('div');
-  wrap.className='tree-node';
+  const wrap=document.createElement('div');wrap.className='tree-node';
+  const row=document.createElement('div');row.className='tree-row'+(isActive?' active':'');
+  const tog=document.createElement('span');tog.className='tree-toggle';
+  if(hasChildren){tog.textContent=isOpen?'▾':'▸';tog.onclick=e=>{e.stopPropagation();sessionStorage.setItem(stateKey,isOpen?'0':'1');render()}}
+  row.appendChild(tog);
+  const lbl=document.createElement('span');lbl.className='tree-label';lbl.textContent=node.name;row.appendChild(lbl);
+  const countEl=document.createElement('span');countEl.className='tree-count';countEl.textContent=cnt||'';row.appendChild(countEl);
+  const editBtn=document.createElement('button');editBtn.className='tree-edit-btn';editBtn.textContent='편집';
+  editBtn.onclick=e=>{e.stopPropagation();startInlineEdit(node,row,wrap)};row.appendChild(editBtn);
+  row.onclick=()=>{isActive?activeTags.delete(node.name):activeTags.add(node.name);render()};
   wrap.appendChild(row);
-
   if(hasChildren&&isOpen){
-    const children=document.createElement('div');
-    children.className='tree-children';
-    node.children.forEach(c=>children.appendChild(renderTreeNode(c,depth+1)));
-    wrap.appendChild(children);
-  }
+    const ch=document.createElement('div');ch.className='tree-children';
+    node.children.forEach(c=>ch.appendChild(renderTreeNode(c)));
+    ch.appendChild(createAddRow(node.id));wrap.appendChild(ch);
+  } else if(!hasChildren){wrap.appendChild(createAddRow(node.id))}
   return wrap;
 }
 
+function createAddRow(parentId){
+  const addRow=document.createElement('div');addRow.className='tree-add-row';
+  const inp=document.createElement('input');inp.type='text';inp.placeholder='하위 항목 추가...';inp.id='add_'+parentId;
+  inp.onkeydown=e=>{if(e.key==='Enter')addChildNodeConfirm(parentId)};
+  const btn=document.createElement('button');btn.className='tree-add-btn';btn.textContent='+';btn.onclick=()=>addChildNodeConfirm(parentId);
+  addRow.appendChild(inp);addRow.appendChild(btn);return addRow;
+}
+
+function startInlineEdit(node,row,wrap){
+  const editRow=document.createElement('div');editRow.className='tree-edit-inline';
+  const inp=document.createElement('input');inp.type='text';inp.value=node.name;
+  const saveBtn=document.createElement('button');saveBtn.className='tree-add-btn';saveBtn.textContent='저장';
+  const delBtn=document.createElement('button');delBtn.className='tree-add-btn';delBtn.style.color='var(--danger)';delBtn.textContent='삭제';
+  saveBtn.onclick=async()=>{
+    const newName=inp.value.trim();if(!newName)return;
+    const oldName=node.name;node.name=newName;saveTagTree();
+    if(oldName!==newName)await renameTagGlobally(oldName,newName);
+    render();
+  };
+  delBtn.onclick=()=>{if(!confirm(`"${node.name}" 삭제?`))return;deleteNodeFromTree(tagTree,node.id);saveTagTree();render()};
+  editRow.appendChild(inp);editRow.appendChild(saveBtn);editRow.appendChild(delBtn);
+  row.style.display='none';wrap.insertBefore(editRow,wrap.firstChild);inp.focus();
+  inp.onkeydown=e=>{if(e.key==='Escape'){editRow.remove();row.style.display=''}};
+}
+
+function addRootNode(){const inp=document.getElementById('root-input');const name=inp.value.trim();if(!name)return;tagTree.push({id:'t'+Date.now(),name,children:[]});inp.value='';saveTagTree()}
+function addChildNodeConfirm(parentId){const inp=document.getElementById('add_'+parentId);if(!inp)return;const name=inp.value.trim();if(!name)return;const parent=findNodeById(tagTree,parentId);if(parent){parent.children=parent.children||[];parent.children.push({id:'t'+Date.now(),name,children:[]})}saveTagTree();inp.value=''}
+
+// ── TAG AUTOCOMPLETE ──
+function onTagInput(input){
+  const val=input.value;const parts=val.split(',');const last=parts[parts.length-1].trim();
+  const ac=document.getElementById('tag-ac');
+  if(last.length<1){ac.className='autocomplete-list';return}
+  const allTags=getAllTagsFlat();
+  const matches=allTags.filter(t=>normalize(t).includes(normalize(last))&&normalize(t)!==normalize(last)).slice(0,8);
+  if(!matches.length){ac.className='autocomplete-list';return}
+  acFocusIdx=-1;
+  ac.innerHTML=matches.map((t,i)=>{
+    const hi=t.replace(new RegExp(last.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi'),m=>`<mark>${m}</mark>`);
+    return`<div class="ac-item" data-val="${t}" onmousedown="selectAcItem('${t}')">${hi}</div>`;
+  }).join('');
+  ac.className='autocomplete-list show';
+}
+
+function onTagKeydown(e,input){
+  const ac=document.getElementById('tag-ac');
+  const items=ac.querySelectorAll('.ac-item');
+  if(e.key==='ArrowDown'){e.preventDefault();acFocusIdx=Math.min(acFocusIdx+1,items.length-1);items.forEach((el,i)=>el.classList.toggle('focused',i===acFocusIdx))}
+  else if(e.key==='ArrowUp'){e.preventDefault();acFocusIdx=Math.max(acFocusIdx-1,0);items.forEach((el,i)=>el.classList.toggle('focused',i===acFocusIdx))}
+  else if(e.key==='Enter'&&acFocusIdx>=0){e.preventDefault();selectAcItem(items[acFocusIdx].dataset.val)}
+  else if(e.key==='Escape'){ac.className='autocomplete-list'}
+}
+
+function selectAcItem(tag){
+  const input=document.getElementById('f-tags');
+  const parts=input.value.split(',');parts[parts.length-1]=' '+tag;
+  input.value=parts.join(',').replace(/^\s*/,'')+', ';
+  document.getElementById('tag-ac').className='autocomplete-list';
+  input.focus();
+}
+
+document.addEventListener('click',e=>{if(!e.target.closest('.field'))document.getElementById('tag-ac').className='autocomplete-list'});
+
+// ── RENDER ──
 function render(){
   const vis=items.filter(matchesItem);
-  document.getElementById('stats').innerHTML=`
-    <div class="stat"><strong>${vis.length}<span style="font-size:13px;color:var(--text3);font-weight:400">/${items.length}</span></strong>표시 중</div>
-    <div class="stat"><strong>${[...new Set(items.flatMap(it=>it.tags||[]))].length}</strong>태그 수</div>
-    <div class="stat"><strong>${Object.keys(allColorsMap()).length}</strong>컬러 수</div>`;
+  document.getElementById('stats').innerHTML=`<div class="stat"><strong>${vis.length}<span style="font-size:12px;color:var(--text3);font-weight:400">/${items.length}</span></strong>표시 중</div><div class="stat"><strong>${getAllTagsFlat().length}</strong>태그</div><div class="stat"><strong>${allColorsFlat().length}</strong>컬러</div>`;
 
-  const treeEl=document.getElementById('tag-tree');
-  treeEl.innerHTML='';
+  const treeEl=document.getElementById('tag-tree');treeEl.innerHTML='';
   tagTree.forEach(n=>treeEl.appendChild(renderTreeNode(n)));
 
   const colorEl=document.getElementById('color-grid');colorEl.innerHTML='';
-  Object.entries(allColorsMap()).forEach(([hex,name])=>{
+  allColorsFlat().forEach(name=>{
     const w=document.createElement('div');w.className='cdot-w';
-    const d=document.createElement('div');d.className='cdot'+(activeColors.has(hex)?' active':'');
-    d.style.background=hex;
-    if(hex.toUpperCase()==='#FFFFFF')d.style.boxShadow='inset 0 0 0 1px var(--border)';
-    d.onclick=()=>{activeColors.has(hex)?activeColors.delete(hex):activeColors.add(hex);render()};
-    const l=document.createElement('div');l.className='cdot-n';l.textContent=name;
+    const d=document.createElement('div');d.className='cdot'+(activeColors.has(name)?' active':'');
+    d.style.background=getColorHex(name);
+    if(['white','off-white','cream','ivory'].includes(name.toLowerCase()))d.style.boxShadow='inset 0 0 0 1px var(--border)';
+    d.onclick=()=>{activeColors.has(name)?activeColors.delete(name):activeColors.add(name);render()};
+    const l=document.createElement('div');l.className='cdn';l.textContent=name;
     w.appendChild(d);w.appendChild(l);colorEl.appendChild(w);
   });
-  document.getElementById('clr-colors').style.display=activeColors.size>0?'inline-block':'none';
+
+  const tc=activeTags.size;const cc=activeColors.size;
+  document.getElementById('clr-tags').style.display=tc>0?'inline-block':'none';
+  document.getElementById('clr-colors').style.display=cc>0?'inline-block':'none';
+  const tb=document.getElementById('tag-badge');tb.style.display=tc>0?'inline':'none';tb.textContent=tc;
+  const cb=document.getElementById('color-badge');cb.style.display=cc>0?'inline':'none';cb.textContent=cc;
 
   const parts=[];
-  activeTags.forEach(t=>{
-    const ancs=getAncestors(tagTree,t)||[];
-    const path=[...ancs.map(a=>a.name),t].join(' › ');
-    parts.push({label:path,tag:t});
-  });
-  activeColors.forEach(c=>parts.push({label:allColorsMap()[c]||c,tag:'__color__'+c}));
-  if(searchQ)parts.push({label:'"'+searchQ+'"',tag:'__search__'});
-
+  activeTags.forEach(t=>{const ancs=getAncestors(tagTree,t)||[];parts.push({label:[...ancs.map(a=>a.name),t].join(' > '),key:'tag_'+t})});
+  activeColors.forEach(c=>parts.push({label:c,key:'color_'+c}));
+  if(searchQ)parts.push({label:'"'+searchQ+'"',key:'search'});
   const bar=document.getElementById('abar');
-  if(parts.length){
-    bar.className='active-bar show';
-    bar.innerHTML=parts.map(p=>`<span class="abar-tag">${p.label}<button onclick="removeFilter('${p.tag.replace(/'/g,"\\'")}')">×</button></span>`).join('');
-  } else bar.className='active-bar';
+  if(parts.length){bar.className='active-bar show';bar.innerHTML=parts.map(p=>`<span class="abar-tag">${p.label}<button onclick="removeFilter('${p.key.replace(/'/g,"\\'")}')">x</button></span>`).join('')+`<span style="font-size:11px;color:var(--text3)">${vis.length}개</span>`}
+  else bar.className='active-bar';
 
-  const grid=document.getElementById('grid-view');
-  if(!vis.length){grid.innerHTML='<div class="empty"><div style="font-size:36px;margin-bottom:10px">✦</div>조건에 맞는 아이템이 없어요</div>';return}
+  const grid=document.getElementById('grid');
+  if(!vis.length){grid.innerHTML='<div class="empty"><div style="font-size:28px;opacity:.2;margin-bottom:8px">*</div>조건에 맞는 아이템이 없어요</div>';return}
   grid.innerHTML='';
   vis.forEach(it=>{
-    const card=document.createElement('div');card.className='card';card.onclick=()=>openDetail(it.id);
-    const thumb=it.thumbnail?`<img src="${it.thumbnail}" alt="${it.title}" loading="lazy">`:'<span style="font-size:28px">✦</span>';
+    const card=document.createElement('div');card.className='card'+(selForGen.has(it.id)?' selected':'');
+    card.onclick=()=>{if(selMode){toggleSel(it.id,card);return}openDetail(it.id)};
+    const thumb=it.thumbnail?`<img src="${it.thumbnail}" alt="${it.title}" loading="lazy">`:'<span style="font-size:26px;opacity:.3">*</span>';
     const imgCnt=(it.image_count||0)>1?`<span class="img-c">${it.image_count}</span>`:'';
+    const ov=`<div class="sel-overlay${selForGen.has(it.id)?' show':''}" id="ov_${it.id}"><div class="sel-check">v</div></div>`;
     const tags=(it.tags||[]).slice(0,3).map(t=>`<span class="ctag${activeTags.has(t)?' match':''}">${t}</span>`).join('');
-    const sw=(it.colors||[]).map((c,i)=>`<div class="cswatch${activeColors.has(c)?' match':''}" style="background:${c}" title="${(it.color_names||[])[i]||c}"></div>`).join('');
-    card.innerHTML=`<div class="ct">${thumb}${imgCnt}</div><div class="cb"><div class="ctitle">${it.title}</div><div class="csrc">${it.source||''}</div><div class="ctags">${tags}</div><div class="csw">${sw}</div></div>`;
+    const sw=(it.colors||[]).map(c=>`<div class="cswatch${activeColors.has(c)?' match':''}" style="background:${getColorHex(c)}" title="${c}"></div>`).join('');
+    card.innerHTML=`<div class="ct">${thumb}${imgCnt}${ov}</div><div class="cb"><div class="ctitle">${it.title}</div><div class="csrc">${it.source||''}</div><div class="ctags">${tags}</div><div class="csw">${sw}</div></div>`;
     grid.appendChild(card);
   });
-  if(currentView==='mind')buildMindmap();
+
+  if(currentView==='canvas')renderCanvas();
 }
 
-function removeFilter(tag){
-  if(tag.startsWith('__color__'))activeColors.delete(tag.replace('__color__',''));
-  else if(tag==='__search__'){searchQ='';document.getElementById('search').value='';}
-  else activeTags.delete(tag);
+function removeFilter(key){
+  if(key.startsWith('tag_'))activeTags.delete(key.replace('tag_',''));
+  else if(key.startsWith('color_'))activeColors.delete(key.replace('color_',''));
+  else if(key==='search'){searchQ='';document.getElementById('search').value=''}
   render();
 }
 
-function buildMindmap(){
-  const kw=document.getElementById('mm-input').value.trim().toLowerCase();
-  const canvas=document.getElementById('mm-canvas');
-  const svg=document.getElementById('mm-svg');
-  const empty=document.getElementById('mm-empty');
-  canvas.querySelectorAll('.mm-node').forEach(n=>n.remove());
-  svg.innerHTML='';
-  if(!kw){empty.style.display='flex';return}
-  empty.style.display='none';
-  const related=items.filter(it=>{
-    const hay=[it.title,it.source,it.description,...(it.tags||[]),...(it.color_names||[])].join(' ').toLowerCase();
-    return hay.includes(kw)||(it.tags||[]).some(t=>normalize(t).includes(normalize(kw)));
-  });
-  if(!related.length){empty.style.display='flex';empty.innerHTML=`<span style="font-size:28px">✦</span><span>"${kw}" 관련 레퍼런스가 없어요</span>`;return}
-
-  const W=canvas.offsetWidth||680,H=460,cx=W/2,cy=H/2;
-  const center=document.createElement('div');
-  center.className='mm-node center';
-  center.style.cssText=`width:88px;height:88px;left:${cx-44}px;top:${cy-44}px;font-size:12px;font-weight:500;padding:8px`;
-  center.innerHTML=`<div>${kw}</div><div style="font-size:10px;opacity:.6;margin-top:2px">${related.length}개</div>`;
-  canvas.appendChild(center);
-
-  const R=Math.min(W,H)*0.37;
-  related.forEach((it,i)=>{
-    const angle=(2*Math.PI/related.length)*i-Math.PI/2;
-    const nx=cx+R*Math.cos(angle),ny=cy+R*Math.sin(angle);
-    const nw=130,nh=it.thumbnail?115:65;
-    const line=document.createElementNS('http://www.w3.org/2000/svg','line');
-    line.setAttribute('x1',cx);line.setAttribute('y1',cy);line.setAttribute('x2',nx);line.setAttribute('y2',ny);
-    line.setAttribute('stroke','#e8e8e5');line.setAttribute('stroke-width','1');
-    svg.appendChild(line);
-    const node=document.createElement('div');
-    node.className='mm-node'+(selForGen.has(it.id)?' sel':'');
-    node.style.cssText=`width:${nw}px;left:${nx-nw/2}px;top:${ny-nh/2}px`;
-    const tags=(it.tags||[]).slice(0,2).map(t=>`<span class="mm-tag">${t}</span>`).join('');
-    node.innerHTML=`${it.thumbnail?`<img class="mm-img" src="${it.thumbnail}" alt="${it.title}" loading="lazy">`:''}
-      <div class="mm-body"><div class="mm-title">${it.title}</div><div class="mm-tags">${tags}</div></div>`;
-    node.onclick=()=>{
-      selForGen.has(it.id)?selForGen.delete(it.id):selForGen.add(it.id);
-      node.classList.toggle('sel');
-      updateGenSel();
-    };
-    canvas.appendChild(node);
-  });
+function computeSimilarity(a,b){
+  const tagsA=new Set((a.tags||[]).map(t=>normalize(t)));
+  const tagsB=new Set((b.tags||[]).map(t=>normalize(t)));
+  const sharedTags=[...tagsA].filter(t=>tagsB.has(t));
+  const colorsA=new Set((a.colors||[]).map(c=>c.toLowerCase()));
+  const colorsB=new Set((b.colors||[]).map(c=>c.toLowerCase()));
+  const sharedColors=[...colorsA].filter(c=>colorsB.has(c));
+  return{score:sharedTags.length*2+sharedColors.length*1.5,sharedTags,sharedColors};
 }
 
-function updateGenSel(){
-  const sel=items.filter(it=>selForGen.has(it.id));
-  const el=document.getElementById('gen-sel');
-  if(!sel.length){el.innerHTML='<span style="font-size:10px;color:var(--text3)">레퍼런스를 클릭해 선택해주세요</span>';return}
-  el.innerHTML=sel.map(it=>`<span class="gsel">✦ ${it.title.slice(0,18)}</span>`).join('');
-  const tags=[...new Set(sel.flatMap(it=>it.tags||[]))].slice(0,6).join(', ');
-  const colors=[...new Set(sel.flatMap(it=>it.color_names||[]))].slice(0,3).join(', ');
-  document.getElementById('gen-prompt').placeholder=`자동 프롬프트: ${tags} · 컬러: ${colors}`;
-}
-
-async function generateImage(){
-  if(!GEM_KEY){alert('Gemini API 키가 없어요. 설정에서 추가해주세요.');return}
-  const sel=items.filter(it=>selForGen.has(it.id));
-  if(!sel.length){alert('레퍼런스를 선택해주세요');return}
-  const st=document.getElementById('gen-status');
-  const extra=document.getElementById('gen-prompt').value.trim();
-  const tags=[...new Set(sel.flatMap(it=>it.tags||[]))].slice(0,8).join(', ');
-  const colors=[...new Set(sel.flatMap(it=>it.color_names||[]))].slice(0,4).join(', ');
-  const notes=sel.map(it=>it.description).filter(Boolean).join(' ').slice(0,200);
-  const prompt=`Fashion design reference image. Style: ${tags}. Color palette: ${colors}. ${notes}. ${extra}. High quality fashion photography, clean background.`;
-  st.className='status show';st.innerHTML='<span class="spin"></span> Gemini로 이미지 생성 중... (5~15초)';
-  document.getElementById('gen-res').className='gen-res';
-  try{
-    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp-image-generation:generateContent?key=${GEM_KEY}`,{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{responseModalities:['IMAGE','TEXT']}})
-    });
-    if(!res.ok){const e=await res.json();throw new Error(e.error?.message||'API 오류')}
-    const data=await res.json();
-    const imgPart=data.candidates?.[0]?.content?.parts?.find(p=>p.inlineData);
-    if(!imgPart)throw new Error('이미지 생성 실패');
-    generatedImg='data:'+imgPart.inlineData.mimeType+';base64,'+imgPart.inlineData.data;
-    document.getElementById('gen-img').src=generatedImg;
-    document.getElementById('gen-res').className='gen-res show';
-    st.className='status done';st.innerHTML='✓ 생성 완료!';
-  }catch(e){st.className='status error';st.innerHTML='⚠ 생성 실패: '+e.message}
-}
-
-function saveGenerated(){
-  if(!generatedImg)return;
-  pendingImg=generatedImg;
-  document.getElementById('gen-res').className='gen-res';
-  document.getElementById('gen-status').className='status';
-  openAdd();
-  document.getElementById('drop-prev').innerHTML=`<img src="${generatedImg}">`;
-  document.getElementById('f-source').value='AI generated';
-  document.getElementById('ff').className='ff show';
-}
-
-function openDetail(id){
+function openCreationMode(id){
   const it=items.find(x=>x.id===id);if(!it)return;
-  const tags=(it.tags||[]).map(t=>{
-    const ancs=getAncestors(tagTree,t)||[];
-    return `<span class="modal-tag">${t}</span>`;
-  }).join('');
-  const sw=(it.colors||[]).map((c,i)=>`<div class="msw-item"><div class="msw" style="background:${c}"></div><div class="msw-n">${(it.color_names||[])[i]||''}</div></div>`).join('');
-  const slides=it.extra_images&&it.extra_images.length?`
-    <div class="slabel">전체 이미지</div>
-    <div class="img-slides">
-      ${it.thumbnail?`<div class="islide saved"><img src="${it.thumbnail}" alt=""></div>`:''}
-      ${it.extra_images.map(url=>`<div class="islide"><img src="${url}" alt="" onerror="this.parentElement.style.display='none'"></div>`).join('')}
-    </div>`:'';
-  
-  const tagList=(it.tags||[]);
-  let ancestorHints='';
-  const relevantAncs=new Set();
-  tagList.forEach(t=>{
-    const ancs=getAncestors(tagTree,t)||[];
-    ancs.forEach(a=>relevantAncs.add(a.name));
+  closeDetail();creationItemId=id;workspaceIds=[id];
+  document.getElementById('creation-title').textContent=it.title;
+  if(it.thumbnail){document.getElementById('creation-main-img').src=it.thumbnail;document.getElementById('creation-main-img').style.display='block'}
+  else document.getElementById('creation-main-img').style.display='none';
+  document.getElementById('cm-title').textContent=it.title;
+  document.getElementById('cm-src').textContent=it.source||'';
+  document.getElementById('cm-desc').textContent=it.description||'--';
+  document.getElementById('cm-tags').innerHTML=(it.tags||[]).map(t=>`<span class="modal-tag">${t}</span>`).join('');
+  document.getElementById('cm-colors').innerHTML=(it.colors||[]).map(c=>`<div style="display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:26px;height:26px;border-radius:7px;background:${getColorHex(c)};border:1px solid rgba(0,0,0,.08)"></div><div style="font-size:9px;color:var(--text3)">${c}</div></div>`).join('');
+  const sims=items.filter(x=>x.id!==id).map(x=>({...computeSimilarity(it,x),item:x})).filter(s=>s.score>0).sort((a,b)=>b.score-a.score).slice(0,12);
+  document.getElementById('sim-count').textContent=sims.length+'개 유사 레퍼런스';
+  const simGrid=document.getElementById('sim-grid');simGrid.innerHTML='';
+  sims.forEach(s=>{
+    const card=document.createElement('div');card.className='sim-card'+(workspaceIds.includes(s.item.id)?' picked':'');
+    const thumb=s.item.thumbnail?`<div class="sim-thumb"><img src="${s.item.thumbnail}" alt="" style="width:100%;height:100%;object-fit:cover"></div>`:`<div class="sim-thumb">*</div>`;
+    const tags=(s.item.tags||[]).slice(0,3).map(t=>`<span class="sim-tag${s.sharedTags.includes(normalize(t))?' shared':''}">${t}</span>`).join('');
+    card.innerHTML=`${thumb}<div class="sim-info"><div class="sim-title">${s.item.title}</div><div class="sim-score">태그 ${s.sharedTags.length}개 공유</div><div class="sim-tags">${tags}</div></div>`;
+    card.onclick=()=>{
+      if(workspaceIds.includes(s.item.id)){workspaceIds=workspaceIds.filter(x=>x!==s.item.id);card.classList.remove('picked')}
+      else{workspaceIds.push(s.item.id);card.classList.add('picked')}
+      renderWorkspace();
+    };
+    simGrid.appendChild(card);
   });
-  if(relevantAncs.size>0){
-    ancestorHints=`<div class="ancestors show"><span style="color:var(--text3);margin-right:4px">상위 카테고리:</span>${[...relevantAncs].map(n=>`<span class="anc-tag" onclick="addFilter('${n}')">${n} +</span>`).join('')}</div>`;
-  }
-
-  document.getElementById('detail-content').innerHTML=`
-    ${it.thumbnail?`<img class="modal-img" src="${it.thumbnail}" alt="${it.title}">`:''}
-    <div class="modal-title">${it.title}</div>
-    <div class="modal-src">${it.source||''}${it.created_at?' · '+it.created_at.slice(0,10):''}</div>
-    ${it.url?`<div style="font-size:11px;margin-bottom:.75rem"><a href="${it.url}" style="color:#1a56db" target="_blank">🔗 ${it.url}</a></div>`:''}
-    ${slides}
-    <div class="slabel">Notes</div>
-    <div class="modal-desc">${it.description||'—'}</div>
-    <div class="slabel">태그</div>
-    ${ancestorHints}
-    <div class="modal-tags">${tags}</div>
-    <div class="slabel">컬러 팔레트</div>
-    <div class="modal-swatches">${sw}</div>
-    <div class="mbtns">
-      <button class="btn" onclick="startEdit('${id}')">✏️ 수정</button>
-      <button class="btn btn-danger" onclick="deleteItem('${id}')">🗑 삭제</button>
-    </div>`;
-  document.getElementById('detail-ov').classList.add('open');
+  renderWorkspace();
+  setView('creation');
 }
 
-function addFilter(tag){ activeTags.add(tag); closeDetail(); render(); }
-function closeDetail(){ document.getElementById('detail-ov').classList.remove('open'); }
-async function deleteItem(id){
-  if(!confirm('삭제할까요?'))return;
-  try{await deleteItemDB(id);items=items.filter(x=>x.id!==id);closeDetail();render();}
-  catch(e){alert('삭제 실패: '+e.message)}
+function renderWorkspace(){
+  const board=document.getElementById('workspace-board');board.innerHTML='';
+  workspaceIds.forEach(id=>{
+    const it=items.find(x=>x.id===id);if(!it)return;
+    const card=document.createElement('div');card.className='ws-card';
+    card.innerHTML=`<div class="ws-thumb">${it.thumbnail?`<img src="${it.thumbnail}" alt="" style="width:100%;height:100%;object-fit:cover">`:'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:18px">*</div>'}</div><div class="ws-label">${it.title}</div><button class="ws-remove" onclick="removeFromWorkspace('${id}')">x</button>`;
+    board.appendChild(card);
+  });
+  const addBtn=document.createElement('div');addBtn.className='ws-add-btn';addBtn.textContent='+';addBtn.onclick=addFromLibrary;
+  board.appendChild(addBtn);
+  updateCreationGenRefs();
 }
 
-function resetForm(){
-  ['f-title','f-source','f-url','f-tags','f-desc','f-colors','f-cnames','url-input'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});
-  document.getElementById('drop-prev').innerHTML='';
-  document.getElementById('cprev').innerHTML='';
-  document.getElementById('fetched-imgs').innerHTML='';
-  document.getElementById('fetch-st').className='status';
-  document.getElementById('ai-st').className='status';
-  document.getElementById('ai-choice').className='ai-choice';
-  document.getElementById('ff').className='ff';
-  pendingImg=null;selFetched=[];
-  switchTab('img');
+function removeFromWorkspace(id){workspaceIds=workspaceIds.filter(x=>x!==id);renderWorkspace()}
+function addFromLibrary(){alert('그리드 뷰에서 아이템을 선택해서 작업 보드에 추가할 수 있어요.')}
+function updateCreationGenRefs(){
+  const sel=workspaceIds.map(id=>items.find(x=>x.id===id)).filter(Boolean);
+  selForGen=new Set(workspaceIds);
+  const el=document.getElementById('gen-refs-creation');
+  if(!sel.length){el.innerHTML='<span style="font-size:11px;color:var(--text3)">작업 보드에 아이템을 추가해주세요</span>';return}
+  el.innerHTML=sel.map(it=>`<span class="gen-ref-tag">* ${it.title.slice(0,18)}</span>`).join('');
 }
-
-function openAdd(){ editingId=null;document.getElementById('add-title').textContent='새 레퍼런스 추가';resetForm();document.getElementById('add-ov').classList.add('open'); }
-function closeAdd(){ document.getElementById('add-ov').classList.remove('open'); }
-function ovClose(e,id){ if(e.target===document.getElementById(id))document.getElementById(id).classList.remove('open'); }
-
-function switchTab(tab){
-  currentTab=tab;
-  document.getElementById('tab-img').className='tab'+(tab==='img'?' active':'');
-  document.getElementById('tab-url').className='tab'+(tab==='url'?' active':'');
-  document.getElementById('img-sec').className='img-sec'+(tab==='img'?' show':'');
-  document.getElementById('url-sec').className='url-sec'+(tab==='url'?' show':'');
-  document.getElementById('ai-choice').className='ai-choice';
-  document.getElementById('ff').className='ff';
-  document.getElementById('ai-st').className='status';
+function openCreationGen(){const p=document.getElementById('gen-panel-creation');p.style.display=p.style.display==='none'?'block':'none'}
+function copyWorkspacePrompt(){
+  const sel=workspaceIds.map(id=>items.find(x=>x.id===id)).filter(Boolean);
+  const tags=[...new Set(sel.flatMap(it=>it.tags||[]))].join(', ');
+  const colors=[...new Set(sel.flatMap(it=>it.colors||[]))].join(', ');
+  const notes=sel.map(it=>it.description).filter(Boolean).join(' ').slice(0,300);
+  const prompt=`Fashion design reference. Style: ${tags}. Colors: ${colors}. ${notes}`;
+  navigator.clipboard.writeText(prompt).then(()=>alert('프롬프트가 클립보드에 복사됐어요!'));
 }
+function exitCreation(){creationItemId=null;setView('grid')}
 
-function handleDrop(e){ e.preventDefault();if(e.dataTransfer.files[0])handleFile(e.dataTransfer.files[0]); }
-function handleFile(file){
-  if(!file)return;
+function toggleGenPanel(ctx){
+  const panel=document.getElementById('gen-panel-'+ctx);const showing=panel.style.display!=='none';
+  panel.style.display=showing?'none':'block';selMode=!showing;
+  if(!showing){document.getElementById('gen-toggle-row').innerHTML=`<button class="btn btn-sm" style="border-color:var(--accent)" onclick="toggleGenPanel('grid')">* AI 이미지 생성 중 (카드 선택)</button><button class="btn btn-sm btn-danger" onclick="cancelSel()">취소</button>`}
+  else cancelSel();
+}
+function cancelSel(){selMode=false;selForGen.clear();document.getElementById('gen-panel-grid').style.display='none';document.getElementById('gen-toggle-row').innerHTML=`<button class="btn btn-sm" onclick="toggleGenPanel('grid')">* AI 이미지 생성</button>`;render()}
+function toggleSel(id,card){
+  selForGen.has(id)?selForGen.delete(id):selForGen.add(id);
+  card.classList.toggle('selected',selForGen.has(id));
+  const ov=document.getElementById('ov_'+id);if(ov)ov.className='sel-overlay'+(selForGen.has(id)?' show':'');
+  updateGenRefs('grid');
+}
+function updateGenRefs(ctx){
+  const sel=items.filter(it=>selForGen.has(it.id));
+  const el=document.getElementById('gen-refs-'+ctx);if(!el)return;
+  if(!sel.length){el.innerHTML=`<span style="font-size:11px;color:var(--text3)">${ctx==='grid'?'카드를 클릭해 선택':'노드를 클릭해 선택'}</span>`;return}
+  el.innerHTML=sel.map(it=>`<span class="gen-ref-tag">* ${it.title.slice(0,16)}<span style="cursor:pointer;color:var(--text3);margin-left:2px" onclick="removeGenRef('${it.id}','${ctx}')">x</span></span>`).join('');
+  const tags=[...new Set(sel.flatMap(it=>it.tags||[]))].slice(0,6).join(', ');
+  const colors=[...new Set(sel.flatMap(it=>it.colors||[]))].slice(0,3).join(', ');
+  const pi=document.getElementById('gen-prompt-'+ctx);if(pi)pi.placeholder=`자동: ${tags} / ${colors}`;
+}
+function removeGenRef(id,ctx){selForGen.delete(id);updateGenRefs(ctx);render()}
+function addExtraImg(input,ctx){
+  const file=input.files[0];if(!file)return;
   const r=new FileReader();
   r.onload=e=>{
-    compressImage(e.target.result,compressed=>{
-      pendingImg=compressed;
-      document.getElementById('drop-prev').innerHTML=`<img src="${compressed}">`;
-      document.getElementById('ai-choice').className='ai-choice show';
-      if(!ANT_KEY){ document.getElementById('ai-btn').style.opacity='.4'; document.getElementById('ai-btn').style.pointerEvents='none'; }
-    });
+    extraImgs[ctx]=extraImgs[ctx]||[];extraImgs[ctx].push(e.target.result);
+    const container=document.getElementById('gen-extra-imgs-'+ctx);
+    const wrap=document.createElement('div');wrap.className='gen-extra-img-wrap';
+    const img=document.createElement('img');img.className='gen-extra-img';img.src=e.target.result;
+    const rm=document.createElement('button');rm.className='gen-extra-img-rm';rm.textContent='x';
+    const idx=extraImgs[ctx].length-1;rm.onclick=()=>{extraImgs[ctx].splice(idx,1);wrap.remove()};
+    wrap.appendChild(img);wrap.appendChild(rm);
+    const addBtn=container.querySelector('.gen-extra-add');container.insertBefore(wrap,addBtn);
   };
   r.readAsDataURL(file);
 }
 
-function compressImage(dataUrl,cb){
-  const img=new Image();
-  img.onload=()=>{
-    let w=img.width,h=img.height;
-    const longer=Math.max(w,h);
-    if(longer<=800){cb(dataUrl);return}
-    if(longer>1600){const M=1600;if(w>h){h=Math.round(h*M/w);w=M}else{w=Math.round(w*M/h);h=M}}
-    const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;
-    canvas.getContext('2d').drawImage(img,0,0,w,h);
-    cb(canvas.toDataURL('image/jpeg',0.85));
-  };
-  img.src=dataUrl;
+async function generateImage(ctx){
+  if(!GEM_KEY){alert('Gemini API 키가 없어요.');return}
+  const sel=ctx==='creation'?workspaceIds.map(id=>items.find(x=>x.id===id)).filter(Boolean):items.filter(it=>selForGen.has(it.id));
+  if(!sel.length){alert('레퍼런스를 선택해주세요');return}
+  const st=document.getElementById('gen-status-'+ctx);
+  const extra=(document.getElementById('gen-prompt-'+ctx)||{}).value||'';
+  const tags=[...new Set(sel.flatMap(it=>it.tags||[]))].slice(0,8).join(', ');
+  const colors=[...new Set(sel.flatMap(it=>it.colors||[]))].slice(0,4).join(', ');
+  const notes=sel.map(it=>it.description).filter(Boolean).join(' ').slice(0,200);
+  const prompt=`Fashion design reference. Style: ${tags}. Colors: ${colors}. ${notes}. ${extra}. High quality fashion photograph.`;
+  st.className='status show';st.innerHTML='<span class="spin"></span> Gemini로 이미지 생성 중... (5~15초)';
+  document.getElementById('gen-res-'+ctx).className='gen-res';
+  const parts=[{text:prompt}];
+  (extraImgs[ctx]||[]).forEach(img=>parts.push({inline_data:{mime_type:'image/jpeg',data:img.split(',')[1]}}));
+  try{
+    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp-image-generation:generateContent?key=${GEM_KEY}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts}],generationConfig:{responseModalities:['IMAGE','TEXT']}})});
+    if(!res.ok){const e=await res.json();throw new Error(e.error?.message||'API 오류')}
+    const data=await res.json();const imgPart=data.candidates?.[0]?.content?.parts?.find(p=>p.inlineData);
+    if(!imgPart)throw new Error('이미지 생성 실패');
+    const generated='data:'+imgPart.inlineData.mimeType+';base64,'+imgPart.inlineData.data;
+    generatedImgs[ctx]=generated;
+    document.getElementById('gen-img-'+ctx).src=generated;
+    document.getElementById('gen-res-'+ctx).className='gen-res show';
+    st.className='status done';st.innerHTML='완료!';
+  }catch(e){st.className='status error';st.innerHTML='실패: '+e.message}
+}
+function saveGenerated(ctx){const img=generatedImgs[ctx];if(!img)return;pendingImg=img;openAdd();document.getElementById('drop-prev').innerHTML=`<img src="${img}">`;document.getElementById('f-source').value='AI generated';document.getElementById('ff').className='ff show'}
+
+function buildMindmap(){
+  const kw=document.getElementById('mm-input').value.trim().toLowerCase();
+  const canvas=document.getElementById('mm-canvas');const svg=document.getElementById('mm-svg');const empty=document.getElementById('mm-empty');
+  canvas.querySelectorAll('.mm-node').forEach(n=>n.remove());svg.innerHTML='';
+  if(!kw){empty.style.display='flex';return}
+  empty.style.display='none';
+  const related=items.filter(it=>{const hay=[it.title,it.source,it.description,...(it.tags||[]),...(it.colors||[])].join(' ').toLowerCase();return hay.includes(kw)});
+  if(!related.length){empty.style.display='flex';empty.innerHTML='<span style="font-size:24px;opacity:.2">*</span><span>"'+kw+'" 관련 레퍼런스가 없어요</span>';return}
+  const W=canvas.offsetWidth||680,H=460,cx=W/2,cy=H/2;
+  const center=document.createElement('div');center.className='mm-node center';center.style.cssText=`width:84px;height:84px;left:${cx-42}px;top:${cy-42}px;font-size:12px;font-weight:600;padding:8px`;center.innerHTML=`<div>${kw}</div><div style="font-size:10px;opacity:.6;margin-top:2px">${related.length}개</div>`;canvas.appendChild(center);
+  const R=Math.min(W,H)*0.37;
+  related.forEach((it,i)=>{
+    const angle=(2*Math.PI/related.length)*i-Math.PI/2;const nx=cx+R*Math.cos(angle),ny=cy+R*Math.sin(angle);const nw=128;
+    const line=document.createElementNS('http://www.w3.org/2000/svg','line');line.setAttribute('x1',cx);line.setAttribute('y1',cy);line.setAttribute('x2',nx);line.setAttribute('y2',ny);line.setAttribute('stroke','var(--border)');line.setAttribute('stroke-width','1');svg.appendChild(line);
+    const node=document.createElement('div');node.className='mm-node'+(selForGen.has(it.id)?' sel':'');node.style.cssText=`width:${nw}px;left:${nx-nw/2}px;top:${ny-60}px`;
+    node.innerHTML=`${it.thumbnail?`<img class="mm-img" src="${it.thumbnail}" alt="" loading="lazy">`:''}
+      <div class="mm-body"><div class="mm-title">${it.title}</div><div class="mm-tags">${(it.tags||[]).slice(0,2).map(t=>`<span class="mm-tag">${t}</span>`).join('')}</div></div>`;
+    node.onclick=()=>{selForGen.has(it.id)?selForGen.delete(it.id):selForGen.add(it.id);node.classList.toggle('sel');updateGenRefs('mind')};
+    canvas.appendChild(node);
+  });
 }
 
-function skipAI(){ document.getElementById('ai-choice').className='ai-choice';document.getElementById('ff').className='ff show'; }
+function openDetail(id){
+  const it=items.find(x=>x.id===id);if(!it)return;
+  const tags=(it.tags||[]).map(t=>`<span class="modal-tag">${t}</span>`).join('');
+  const sw=(it.colors||[]).map(c=>`<div class="msw-item"><div class="msw" style="background:${getColorHex(c)}"></div><div class="msw-n">${c}</div></div>`).join('');
+  const slides=it.extra_images&&it.extra_images.length?`<div class="slabel">전체 이미지</div><div class="img-slides">${it.thumbnail?`<div class="islide saved"><img src="${it.thumbnail}" alt=""></div>`:''}${it.extra_images.map(u=>`<div class="islide"><img src="${u}" alt="" onerror="this.parentElement.style.display='none'"></div>`).join('')}</div>`:'';
+  const ancs=new Set();(it.tags||[]).forEach(t=>(getAncestors(tagTree,t)||[]).forEach(a=>ancs.add(a.name)));
+  const ancHtml=ancs.size>0?`<div class="anc-bar show"><span style="color:var(--text3);font-size:10px;margin-right:4px">상위</span>${[...ancs].map(n=>`<span class="anc-link" onclick="addTagFilter('${n}')">${n}</span>`).join('')}</div>`:'';
+  document.getElementById('detail-content').innerHTML=`
+    ${it.thumbnail?`<img class="modal-img" src="${it.thumbnail}" alt="${it.title}">`:''}
+    <div class="modal-title">${it.title}</div>
+    <div class="modal-src">${it.source||''}${it.created_at?' . '+it.created_at.slice(0,10):''}</div>
+    ${it.url?`<div style="font-size:11px;margin-bottom:.75rem"><a href="${it.url}" style="color:var(--info)" target="_blank">link: ${it.url}</a></div>`:''}
+    ${slides}
+    <div class="slabel">Notes</div><div class="modal-desc">${it.description||'--'}</div>
+    <div class="slabel">태그</div>${ancHtml}<div class="modal-tags">${tags}</div>
+    <div class="slabel">컬러</div><div class="modal-swatches">${sw}</div>
+    <div class="mbtns">
+      <button class="btn" onclick="openCreationMode('${id}')">* 창작 시작</button>
+      <button class="btn" onclick="startEdit('${id}')">수정</button>
+      <button class="btn btn-danger" onclick="deleteItem('${id}')">삭제</button>
+    </div>`;
+  document.getElementById('detail-ov').classList.add('open');
+}
+function addTagFilter(tag){activeTags.add(tag);closeDetail();render()}
+function closeDetail(){document.getElementById('detail-ov').classList.remove('open')}
+async function deleteItem(id){if(!confirm('삭제?'))return;try{await deleteItemDB(id);items=items.filter(x=>x.id!==id);closeDetail();render()}catch(e){alert('삭제 실패: '+e.message)}}
+
+function resetForm(){
+  ['f-title','f-source','f-url','f-tags','f-desc','f-colors','url-input'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});
+  document.getElementById('drop-prev').innerHTML='';document.getElementById('cprev').innerHTML='';document.getElementById('fetched-imgs').innerHTML='';
+  ['fetch-st','ai-st'].forEach(id=>document.getElementById(id).className='status');
+  document.getElementById('ai-choice').className='ai-choice';document.getElementById('ff').className='ff';
+  document.getElementById('tag-ac').className='autocomplete-list';
+  pendingImg=null;selFetched=[];switchTab('img');
+}
+function openAdd(){editingId=null;document.getElementById('add-title').textContent='새 레퍼런스 추가';resetForm();document.getElementById('add-ov').classList.add('open')}
+function closeAdd(){document.getElementById('add-ov').classList.remove('open')}
+function ovClose(e,id){if(e.target===document.getElementById(id))document.getElementById(id).classList.remove('open')}
+function switchTab(tab){currentTab=tab;document.getElementById('tab-img').className='tab'+(tab==='img'?' active':'');document.getElementById('tab-url').className='tab'+(tab==='url'?' active':'');document.getElementById('img-sec').className='img-sec'+(tab==='img'?' show':'');document.getElementById('url-sec').className='url-sec'+(tab==='url'?' show':'');document.getElementById('ai-choice').className='ai-choice';document.getElementById('ff').className='ff';document.getElementById('ai-st').className='status'}
+
+function handleDrop(e){e.preventDefault();if(e.dataTransfer.files[0])handleFile(e.dataTransfer.files[0])}
+function handleFile(file){if(!file)return;const r=new FileReader();r.onload=e=>{compressImage(e.target.result,c=>{pendingImg=c;document.getElementById('drop-prev').innerHTML=`<img src="${c}">`;document.getElementById('ai-choice').className='ai-choice show';if(!ANT_KEY){document.getElementById('ai-btn').style.opacity='.35';document.getElementById('ai-btn').style.pointerEvents='none'}})};r.readAsDataURL(file)}
+function compressImage(dataUrl,cb){const img=new Image();img.onload=()=>{let w=img.width,h=img.height;const l=Math.max(w,h);if(l<=800){cb(dataUrl);return}if(l>1600){const M=1600;if(w>h){h=Math.round(h*M/w);w=M}else{w=Math.round(w*M/h);h=M}}const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);cb(c.toDataURL('image/jpeg',0.85))};img.src=dataUrl}
+function skipAI(){document.getElementById('ai-choice').className='ai-choice';document.getElementById('ff').className='ff show'}
 
 async function runAI(){
   if(!ANT_KEY){alert('Anthropic API 키가 없어요');return}
-  document.getElementById('ai-choice').className='ai-choice';
-  document.getElementById('ff').className='ff show';
-  const st=document.getElementById('ai-st');
-  st.className='status show';st.innerHTML='<span class="spin"></span> AI가 이미지 분석 중... (3~5초)';
+  document.getElementById('ai-choice').className='ai-choice';document.getElementById('ff').className='ff show';
+  const st=document.getElementById('ai-st');st.className='status show';st.innerHTML='<span class="spin"></span> AI 분석 중...';
+  const treeStr=JSON.stringify(tagTree.map(n=>({name:n.name,children:(n.children||[]).map(c=>({name:c.name,children:(c.children||[]).map(g=>g.name)}))})));
   try{
     const base64=pendingImg.split(',')[1];
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':ANT_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:[
-        {type:'image',source:{type:'base64',media_type:'image/jpeg',data:base64}},
-        {type:'text',text:`You are a fashion archiving assistant for a Korean fashion designer. Analyze this fashion reference image and respond ONLY with a valid JSON object, no markdown:
-{"title":"brand + item name or descriptive title","source":"platform guess (instagram/pinterest/shopify/screenshot)","tags":["tag1","tag2","tag3","tag4","tag5","tag6"],"colors":["#hex1","#hex2","#hex3"],"colorNames":["name1","name2","name3"],"desc":"2-3 sentences in Korean about why a fashion designer would save this"}
-Tags: print technique (halftone, silkscreen, embroidery...), category (graphic tee, outerwear...), era (90s vintage, y2k...), visual elements, fit, mood/aesthetic.`}
-      ]}]})
-    });
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':ANT_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:[{type:'image',source:{type:'base64',media_type:'image/jpeg',data:base64}},{type:'text',text:`Fashion archiving assistant. Analyze image. Respond ONLY valid JSON no markdown.\nTag tree: ${treeStr}\nUse existing tags first. Colors = names only. desc = 2-3 Korean sentences.\n{"title":"...","source":"instagram/pinterest/shopify/screenshot","tags":["t1","t2","t3","t4","t5"],"colors":["c1","c2","c3"],"desc":"..."}`}]}]})});
     if(!res.ok){const e=await res.json();throw new Error(e.error?.message||'API 오류')}
-    const data=await res.json();
-    const parsed=JSON.parse(data.content.map(b=>b.text||'').join('').replace(/```json|```/g,'').trim());
-    document.getElementById('f-title').value=parsed.title||'';
-    document.getElementById('f-source').value=parsed.source||'';
-    document.getElementById('f-tags').value=(parsed.tags||[]).join(', ');
-    document.getElementById('f-desc').value=parsed.desc||'';
-    document.getElementById('f-colors').value=(parsed.colors||[]).join(', ');
-    document.getElementById('f-cnames').value=(parsed.colorNames||[]).join(', ');
-    previewColors();
-    st.className='status done';st.innerHTML='✓ 분석 완료! 확인 후 수정하세요.';
-  }catch(e){ st.className='status error';st.innerHTML='⚠ 분석 실패: '+e.message; }
+    const data=await res.json();const parsed=JSON.parse(data.content.map(b=>b.text||'').join('').replace(/```json|```/g,'').trim());
+    document.getElementById('f-title').value=parsed.title||'';document.getElementById('f-source').value=parsed.source||'';document.getElementById('f-tags').value=(parsed.tags||[]).join(', ');document.getElementById('f-desc').value=parsed.desc||'';document.getElementById('f-colors').value=(parsed.colors||[]).join(', ');previewColors();
+    st.className='status done';st.innerHTML='완료! 확인 후 수정하세요.';
+  }catch(e){st.className='status error';st.innerHTML='실패: '+e.message}
 }
 
 async function fetchUrl(){
-  const url=document.getElementById('url-input').value.trim();
-  if(!url){alert('URL을 입력해주세요');return}
-  const st=document.getElementById('fetch-st');
-  st.className='status show';st.innerHTML='<span class="spin"></span> 페이지에서 이미지 불러오는 중...';
+  const url=document.getElementById('url-input').value.trim();if(!url){alert('URL을 입력해주세요');return}
+  const st=document.getElementById('fetch-st');st.className='status show';st.innerHTML='<span class="spin"></span> 이미지 불러오는 중...';
   document.getElementById('fetched-imgs').innerHTML='';selFetched=[];
-
-  const proxies=[
-    `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
-    `https://corsproxy.io/?${encodeURIComponent(url)}`,
-    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`
-  ];
-
+  const proxies=[`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,`https://corsproxy.io/?${encodeURIComponent(url)}`];
   let html='';
-  for(const proxy of proxies){
-    try{
-      const res=await fetch(proxy,{signal:AbortSignal.timeout(8000)});
-      if(!res.ok)continue;
-      const ct=res.headers.get('content-type')||'';
-      if(ct.includes('json')){const d=await res.json();html=d.contents||d.body||'';}
-      else{html=await res.text();}
-      if(html.length>100)break;
-    }catch(e){continue;}
-  }
-
-  if(!html){st.className='status error';st.innerHTML='⚠ 페이지를 불러오지 못했어요. 이미지를 직접 업로드해주세요.';return}
-
-  const parser=new DOMParser();
-  const doc=parser.parseFromString(html,'text/html');
-  const origin=new URL(url).origin;
-  const seen=new Set();
-  let imgs=[];
-
-  // Shopify: JSON-LD 및 og:image 우선 파싱
-  doc.querySelectorAll('script[type="application/json"],script[type="application/ld+json"]').forEach(s=>{
-    try{
-      const d=JSON.parse(s.textContent);
-      const srcs=JSON.stringify(d).match(/https?:[^"']*\.(jpg|jpeg|png|webp)[^"']*/gi)||[];
-      srcs.forEach(src=>{const clean=src.split('?')[0]+'?width=800';if(!seen.has(clean)){seen.add(clean);imgs.push(clean)}});
-    }catch(e){}
-  });
-
-  // og:image
-  doc.querySelectorAll('meta[property="og:image"],meta[name="twitter:image"]').forEach(m=>{
-    const s=m.getAttribute('content');if(s&&!seen.has(s)){seen.add(s);imgs.push(s)}
-  });
-
-  // img 태그
-  doc.querySelectorAll('img').forEach(img=>{
-    ['src','data-src','data-original','data-lazy-src'].forEach(attr=>{
-      let s=img.getAttribute(attr)||'';
-      if(s.startsWith('//'))s='https:'+s;
-      if(s.startsWith('/'))s=origin+s;
-      s=s.split('?')[0];
-      if(s&&s.startsWith('http')&&/\.(jpg|jpeg|png|webp)/i.test(s)&&!seen.has(s)&&!s.includes('icon')&&!s.includes('logo')&&!s.includes('svg')){
-        seen.add(s);imgs.push(s);
-      }
-    });
-  });
-
-  // srcset
-  doc.querySelectorAll('[srcset]').forEach(el=>{
-    const parts=el.getAttribute('srcset').split(',');
-    const best=parts[parts.length-1].trim().split(' ')[0];
-    if(best.startsWith('http')&&!seen.has(best)){seen.add(best);imgs.push(best)}
-  });
-
-  imgs=imgs.filter(s=>s&&s.length>10).slice(0,10);
-
-  if(!imgs.length){st.className='status error';st.innerHTML='⚠ 이미지를 찾지 못했어요. 직접 업로드해주세요.';return}
-
-  st.innerHTML=`✓ ${imgs.length}장 발견. 저장할 것을 선택하세요 (첫 번째 선택 = 썸네일)`;
-  document.getElementById('f-url').value=url;
+  for(const proxy of proxies){try{const r=await fetch(proxy,{signal:AbortSignal.timeout(8000)});if(!r.ok)continue;const ct=r.headers.get('content-type')||'';if(ct.includes('json')){const d=await r.json();html=d.contents||d.body||''}else html=await r.text();if(html.length>100)break}catch(e){continue}}
+  if(!html){st.className='status error';st.innerHTML='불러오기 실패. 직접 업로드해주세요.';return}
+  const parser=new DOMParser();const doc=parser.parseFromString(html,'text/html');const origin=new URL(url).origin;const seen=new Set();let imgs=[];
+  doc.querySelectorAll('script[type="application/json"],script[type="application/ld+json"]').forEach(s=>{try{const srcs=JSON.stringify(JSON.parse(s.textContent)).match(/https?:[^"']*\.(jpg|jpeg|png|webp)[^"']*/gi)||[];srcs.forEach(src=>{const c=src.split('?')[0];if(!seen.has(c)){seen.add(c);imgs.push(c)}})}catch(e){}});
+  doc.querySelectorAll('meta[property="og:image"]').forEach(m=>{const s=m.getAttribute('content');if(s&&!seen.has(s)){seen.add(s);imgs.push(s)}});
+  doc.querySelectorAll('img').forEach(img=>{let s=img.getAttribute('src')||'';if(s.startsWith('//'))s='https:'+s;if(s.startsWith('/'))s=origin+s;s=s.split('?')[0];if(s&&s.startsWith('http')&&/\.(jpg|jpeg|png|webp)/i.test(s)&&!seen.has(s)&&!s.includes('icon')&&!s.includes('logo')){seen.add(s);imgs.push(s)}});
+  imgs=imgs.slice(0,10);if(!imgs.length){st.className='status error';st.innerHTML='이미지를 찾지 못했어요. 직접 업로드해주세요.';return}
+  st.innerHTML=`${imgs.length}장 발견. 저장할 것을 선택하세요`;document.getElementById('f-url').value=url;
   const container=document.getElementById('fetched-imgs');
-  let loaded=0;
-  imgs.forEach((src)=>{
-    const w=document.createElement('div');w.className='fimg-w';
-    const img=document.createElement('img');img.className='fimg';
-    img.crossOrigin='anonymous';
-    img.onerror=()=>{w.style.display='none'};
-    img.onload=()=>{loaded++;};
-    img.src=src;
-    const badge=document.createElement('div');badge.className='fbadge';
-    w.appendChild(img);w.appendChild(badge);
-    w.onclick=()=>{
-      const idx=selFetched.indexOf(src);
-      if(idx>-1){selFetched.splice(idx,1);img.classList.remove('sel')}
-      else{selFetched.push(src);img.classList.add('sel')}
-      updateBadges();
-      if(selFetched.length>0)document.getElementById('ff').className='ff show';
-    };
-    container.appendChild(w);
-  });
+  imgs.forEach(src=>{const w=document.createElement('div');w.className='fimg-w';const img=document.createElement('img');img.className='fimg';img.crossOrigin='anonymous';img.onerror=()=>w.style.display='none';img.src=src;const badge=document.createElement('div');badge.className='fbadge';w.appendChild(img);w.appendChild(badge);w.onclick=()=>{const idx=selFetched.indexOf(src);if(idx>-1){selFetched.splice(idx,1);img.classList.remove('sel')}else{selFetched.push(src);img.classList.add('sel')}updateBadges();if(selFetched.length>0)document.getElementById('ff').className='ff show'};container.appendChild(w)});
 }
-
-function updateBadges(){
-  document.querySelectorAll('.fimg').forEach(img=>{
-    const idx=selFetched.indexOf(img.src);
-    const badge=img.nextElementSibling;
-    if(idx>-1){img.classList.add('sel');badge.style.display='flex';badge.textContent=idx===0?'★':(idx+1)}
-    else{img.classList.remove('sel');badge.style.display='none'}
-  });
-}
-
-function previewColors(){
-  const colors=document.getElementById('f-colors').value.split(',').map(s=>s.trim()).filter(Boolean);
-  const names=document.getElementById('f-cnames').value.split(',').map(s=>s.trim());
-  document.getElementById('cprev').innerHTML=colors.map((c,i)=>`<div class="cp-i"><div class="cp-d" style="background:${c}"></div><div class="cp-n">${names[i]||''}</div></div>`).join('');
-}
+function updateBadges(){document.querySelectorAll('.fimg').forEach(img=>{const idx=selFetched.indexOf(img.src);const badge=img.nextElementSibling;if(idx>-1){img.classList.add('sel');badge.style.display='flex';badge.textContent=idx===0?'1st':(idx+1)}else{img.classList.remove('sel');badge.style.display='none'}})}
+function previewColors(){const colors=document.getElementById('f-colors').value.split(',').map(s=>s.trim()).filter(Boolean);document.getElementById('cprev').innerHTML=colors.map(c=>`<div class="cp-i"><div class="cp-d" style="background:${getColorHex(c)}"></div><div class="cp-n">${c}</div></div>`).join('')}
 
 function startEdit(id){
-  const it=items.find(x=>x.id===id);if(!it)return;
-  closeDetail();editingId=id;
+  const it=items.find(x=>x.id===id);if(!it)return;closeDetail();editingId=id;
   document.getElementById('add-title').textContent='레퍼런스 수정';resetForm();
-  document.getElementById('f-title').value=it.title||'';
-  document.getElementById('f-source').value=it.source||'';
-  document.getElementById('f-url').value=it.url||'';
-  document.getElementById('f-tags').value=(it.tags||[]).join(', ');
-  document.getElementById('f-desc').value=it.description||'';
-  document.getElementById('f-colors').value=(it.colors||[]).join(', ');
-  document.getElementById('f-cnames').value=(it.color_names||[]).join(', ');
-  previewColors();
+  document.getElementById('f-title').value=it.title||'';document.getElementById('f-source').value=it.source||'';document.getElementById('f-url').value=it.url||'';document.getElementById('f-tags').value=(it.tags||[]).join(', ');document.getElementById('f-desc').value=it.description||'';document.getElementById('f-colors').value=(it.colors||[]).join(', ');previewColors();
   if(it.thumbnail){pendingImg=it.thumbnail;document.getElementById('drop-prev').innerHTML=`<img src="${it.thumbnail}">`}
-  document.getElementById('ff').className='ff show';
-  document.getElementById('add-ov').classList.add('open');
+  document.getElementById('ff').className='ff show';document.getElementById('add-ov').classList.add('open');
 }
 
 async function saveItem(){
-  const title=document.getElementById('f-title').value.trim();
-  if(!title){alert('제목을 입력해주세요');return}
-  const btn=document.getElementById('save-btn');
-  btn.disabled=true;btn.textContent='저장 중...';
-
-  let thumbnail=pendingImg||null;
-  let extraImages=[];
-
-  if(currentTab==='url'&&selFetched.length>0){
-    thumbnail=await urlToBase64(selFetched[0]);
-    extraImages=selFetched.slice(1);
-  }
-
-  const d={
-    title,
-    source:document.getElementById('f-source').value.trim()||'기타',
-    url:document.getElementById('f-url').value.trim(),
-    thumbnail,
-    extra_images:extraImages,
-    image_count:extraImages.length+(thumbnail?1:0),
-    tags:document.getElementById('f-tags').value.split(',').map(t=>t.trim()).filter(Boolean),
-    colors:document.getElementById('f-colors').value.split(',').map(t=>t.trim()).filter(Boolean),
-    color_names:document.getElementById('f-cnames').value.split(',').map(t=>t.trim()).filter(Boolean),
-    description:document.getElementById('f-desc').value.trim()
-  };
-
+  const title=document.getElementById('f-title').value.trim();if(!title){alert('제목을 입력해주세요');return}
+  const btn=document.getElementById('save-btn');btn.disabled=true;btn.textContent='저장 중...';
+  let thumbnail=pendingImg||null;let extraImages=[];
+  if(currentTab==='url'&&selFetched.length>0){thumbnail=await urlToBase64(selFetched[0]);extraImages=selFetched.slice(1)}
+  const d={title,source:document.getElementById('f-source').value.trim()||'기타',url:document.getElementById('f-url').value.trim(),thumbnail,extra_images:extraImages,image_count:extraImages.length+(thumbnail?1:0),tags:document.getElementById('f-tags').value.split(',').map(t=>t.trim()).filter(Boolean),colors:document.getElementById('f-colors').value.split(',').map(t=>t.trim()).filter(Boolean),color_names:document.getElementById('f-colors').value.split(',').map(t=>t.trim()).filter(Boolean),description:document.getElementById('f-desc').value.trim()};
   try{
-    if(editingId){
-      const res=await updateItem(editingId,d);
-      const u=Array.isArray(res)?res[0]:res;
-      items=items.map(x=>x.id===editingId?u:x);
-    }else{
-      const res=await insertItem(d);
-      const created=Array.isArray(res)?res[0]:res;
-      items.unshift(created);
-    }
+    if(editingId){const res=await updateItem(editingId,d);const u=Array.isArray(res)?res[0]:res;items=items.map(x=>x.id===editingId?u:x)}
+    else{const res=await insertItem(d);const c=Array.isArray(res)?res[0]:res;items.unshift(c)}
     closeAdd();render();
   }catch(e){alert('저장 실패: '+e.message)}
   finally{btn.disabled=false;btn.textContent='저장하기'}
 }
 
-async function urlToBase64(url){
-  try{
-    const res=await fetch(url);
-    const blob=await res.blob();
-    return new Promise(resolve=>{
-      const r=new FileReader();r.onload=e=>{ compressImage(e.target.result,resolve); };r.readAsDataURL(blob);
-    });
-  }catch(e){return url}
-}
-
-function openTagEditor(){
-  renderTagEditor();
-  document.getElementById('te-ov').classList.add('open');
-}
-
-function saveTagTree(){ localStorage.setItem(STORAGE_TREE,JSON.stringify(tagTree));render(); }
-
-function renderTagEditor(){
-  const el=document.getElementById('te-tree');el.innerHTML='';
-  tagTree.forEach(n=>el.appendChild(renderTeNode(n,tagTree)));
-}
-
-function renderTeNode(node,siblings,depth=0){
-  const wrap=document.createElement('div');wrap.className='te-node';
-  const row=document.createElement('div');row.className='te-row';
-  const path=getNodePath(tagTree,node.id);
-  row.innerHTML=`
-    <span class="te-path">${'—'.repeat(depth)}</span>
-    <span class="te-name">${node.name}</span>
-    <div class="te-btns">
-      <button class="te-btn" onclick="addChildNode('${node.id}')">+ 하위</button>
-      <button class="te-btn del" onclick="deleteNode('${node.id}')">삭제</button>
-    </div>`;
-  wrap.appendChild(row);
-  if((node.children||[]).length>0){
-    const ch=document.createElement('div');ch.className='te-children';
-    node.children.forEach(c=>ch.appendChild(renderTeNode(c,node.children,depth+1)));
-    const addRow=document.createElement('div');addRow.className='add-node-row';
-    addRow.innerHTML=`<input type="text" id="add_${node.id}" placeholder="하위 항목 추가..."><button class="btn btn-dark" onclick="addChildNodeConfirm('${node.id}')">추가</button>`;
-    ch.appendChild(addRow);
-    wrap.appendChild(ch);
-  } else {
-    const addRow=document.createElement('div');addRow.className='add-node-row';
-    addRow.innerHTML=`<input type="text" id="add_${node.id}" placeholder="하위 항목 추가..."><button class="btn btn-dark" onclick="addChildNodeConfirm('${node.id}')">추가</button>`;
-    wrap.appendChild(addRow);
-  }
-  return wrap;
-}
-
-function getNodePath(tree,id,path=[]){ for(const n of tree){ if(n.id===id)return path; const f=getNodePath(n.children||[],id,[...path,n.name]); if(f)return f; } return null; }
-function findNodeById(tree,id){ for(const n of tree){ if(n.id===id)return n; const f=findNodeById(n.children||[],id); if(f)return f; } return null; }
-function deleteNodeFromTree(tree,id){ for(let i=0;i<tree.length;i++){ if(tree[i].id===id){tree.splice(i,1);return true} if(deleteNodeFromTree(tree[i].children||[],id))return true; } return false; }
-
-function addRootNode(){
-  const input=document.getElementById('te-root-input');
-  const name=input.value.trim();if(!name)return;
-  tagTree.push({id:'t'+Date.now(),name,children:[]});
-  input.value='';saveTagTree();renderTagEditor();
-}
-
-function addChildNode(parentId){
-  const input=document.getElementById('add_'+parentId);
-  if(input)input.focus();
-}
-
-function addChildNodeConfirm(parentId){
-  const input=document.getElementById('add_'+parentId);
-  if(!input)return;
-  const name=input.value.trim();if(!name)return;
-  const parent=findNodeById(tagTree,parentId);
-  if(parent){parent.children=parent.children||[];parent.children.push({id:'t'+Date.now(),name,children:[]});}
-  saveTagTree();renderTagEditor();
-}
-
-function deleteNode(id){
-  if(!confirm('이 항목과 하위 항목을 모두 삭제할까요?'))return;
-  deleteNodeFromTree(tagTree,id);saveTagTree();renderTagEditor();
-}
+async function urlToBase64(url){try{const res=await fetch(url);const blob=await res.blob();return new Promise(resolve=>{const r=new FileReader();r.onload=e=>compressImage(e.target.result,resolve);r.readAsDataURL(blob)})}catch(e){return url}}
 
 document.getElementById('search').addEventListener('input',e=>{searchQ=e.target.value.trim();render()});
 render();
 </script>
-
 </body>
 </html>
